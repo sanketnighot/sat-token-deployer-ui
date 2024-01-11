@@ -15,10 +15,10 @@ const Token = ({ setShowToken }) => {
                     <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} for the great Artists of Tezos {'>'}</h2>
                 </div>
                 <div className="border-2 border-[#39FF14] ring-2 ring-[#39FF14] shadow-lg p-5">
-                    <h3 className="text-center text-2xl md:text-4xl">Enter Token Details</h3>
+                    <h3 className="text-center text-xl md:text-3xl font-seven mb-4">Enter Token Details</h3>
                     <div className="flex-row justify-center md:flex text-center">
                         <input
-                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full"
+                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="Enter Token Name"
                             value={tokenName}
                             onChange={
@@ -28,7 +28,7 @@ const Token = ({ setShowToken }) => {
                             }
                         />
                         <input
-                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full"
+                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="Enter Token Symbol"
                             value={tokenSymbol}
                             onChange={
@@ -40,7 +40,7 @@ const Token = ({ setShowToken }) => {
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
                         <input
-                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full"
+                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="Enter Token Supply"
                             value={tokenSupply}
                             onChange={
@@ -50,7 +50,7 @@ const Token = ({ setShowToken }) => {
                             }
                         />
                         <input
-                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full"
+                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="Enter Token Decimals"
                             value={tokenDecimal}
                             onChange={
@@ -60,9 +60,9 @@ const Token = ({ setShowToken }) => {
                             }
                         />
                     </div>
-                    <div className="flex-row justify-center md:flex text-center">
+                    <div className="flex-row justify-center md:flex text-center mb-4">
                         <textarea
-                            className="text-left md:mx-2 w-5/6 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full"
+                            className="text-left md:mx-2 w-5/6 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full px-2"
                             placeholder="Describe Token here ..."
                             value={tokenDescription}
                             onChange={
@@ -74,11 +74,11 @@ const Token = ({ setShowToken }) => {
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
                         <button
-                            className="mx-auto text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-auto w-5/6 px-4 py-1 bg-green-900 hover:bg-green-500"
+                            className="mx-auto text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-full w-5/6 px-4 mx-2 py-1 bg-green-900 hover:text-green-900 text-[#a2ff00] hover:bg-[#a2ff00]"
                             onClick={() => { setShowToken(false) }}>
                             Previous
                         </button>
-                        <button className="mx-auto text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-auto w-5/6 px-4 py-1 bg-green-900 hover:bg-green-500">
+                        <button className="mx-auto text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-full w-5/6 mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900">
                             Create SAT Token
                         </button>
                     </div>
