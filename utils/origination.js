@@ -62,18 +62,17 @@ export const deployContract = async (
             })
         }
     });
-
-    const totalSupply = (new BigNumber(tokenSupply)).multipliedBy(new BigNumber(10).pow(DECIMAL))
     setTxnMessage('Setting up Storage ...');
     let storage = {
         administrator: collectionAdmin,
         last_token_id: 1,
-        ledger: {},
+        ledger: MichelsonMap.fromLiteral({}),
         metadata: metadata,
         operators: {},
         supply: tokenSupply,
         token_metadata: tokenMetadata,
     }
+    storage.ledger.set(collectionAdmin, tokenSupply)
     setTxnMessage('Waiting for you to sign Transaction ...');
     const tezos = await dappClient().tezos();
     const batch = await tezos.wallet.batch()
