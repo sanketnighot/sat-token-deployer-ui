@@ -2,10 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'ComputerFont';
+  src: url('./Computerfont.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SevenSegmentFont';
+  src: url('./SevenSegment.ttf') format('truetype');
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --color-background: #1b1b1b; /* Replace with the background color from your theme */
+  --color-text: #a2ff00; /* Replace with the text color from your theme */
+  --color-outline: #00ff00; /* Replace with the outline color from your theme */
+}
+
+html {
+  font-family: 'ComputerFont', sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+h2 {
+  color: #a2ff00;
+}
+
+p {
+  color: #6efa6e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,12 +43,53 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.bg-theme-background {
+  background-color: var(--color-background);
+}
+
+.text-theme-text {
+  color: var(--color-text);
+}
+
+.border-theme-outline {
+  border-color: var(--color-outline);
+}
+
+/* .text-base {
+  font-size: 1rem; 
+}
+
+.md:text-lg {
+  font-size: 1.125rem; 
+}
+
+.lg:text-xl {
+  font-size: 5.25rem; 
+}
+
+.xl:text-2xl {
+  font-size: 100rem;
+} */
+
+
+.circle-animation {
+  animation: circleReveal 3.0s ease forwards;
+}
+
+@keyframes circleReveal {
+  from {
+    clip-path: circle(0% at 50% 50%);
+  }
+  to {
+    clip-path: circle(150% at 50% 50%);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
