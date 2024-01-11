@@ -12,6 +12,7 @@
     "@airgap/beacon-sdk": "4.0.4",
     "@taquito/beacon-wallet": "16.2.0",
     "@taquito/taquito": "16.2.0",
+    "bignumber.js": "^9.1.2",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"

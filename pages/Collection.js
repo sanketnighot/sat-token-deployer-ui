@@ -9,7 +9,6 @@ const Collection = () => {
 
     return (
         <div className="flex flex-wrap justify-center items-center min-h-screen">
-
             <div className="container min-h-24 w-full md:w-3/6 p-8">
                 <div className="mb-8">
                     <h1 className="text-center text-3xl md:text-5xl mb-2">Special Appreciation Token</h1>

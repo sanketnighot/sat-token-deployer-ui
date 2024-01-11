@@ -1,18 +1,47 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { deployContract } from '../utils/origination';
 
-const Token = ({ setShowToken }) => {
+const Token = ({ collectionName, collectionAdmin, collectionDescription, setShowToken }) => {
     const [tokenName, setTokenName] = useState();
     const [tokenSymbol, setTokenSymbol] = useState();
     const [tokenSupply, setTokenSupply] = useState();
-    const [tokenDecimal, setTokenDecimal] = useState();
+    const [tokenUrl, setTokenUrl] = useState();
     const [tokenDescription, setTokenDescription] = useState();
-    const [transactionUrl, setTransactionUrl] = useState("https://example.com");
+    const [transactionUrl, setTransactionUrl] = useState();
     const [showError, setShowError] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState("Error Message");
     const [successMessage, setSuccessMessage] = useState("Sucess Message");
+    const [isLoading, setIsLoading] = useState(false);
+    const [txnMessage, setTxnMessage] = useState(false);
+    const FEE_RECIPIENT = "tz1gPGbygTTqXPt3saqpnPW5YviLUGSB36rx";
+    const FEE = 2;
 
+    const createCollection = async () => {
+        try {
+            deployContract(
+                collectionName,
+                collectionAdmin,
+                collectionDescription,
+                tokenName,
+                tokenDescription,
+                tokenSymbol,
+                tokenSupply,
+                tokenUrl,
+                setShowSuccess,
+                setTransactionUrl,
+                setIsLoading,
+                setTxnMessage,
+                setSuccessMessage,
+            )
+        } catch (error) {
+            setIsLoading(false);
+            setShowError(true);
+            setErrorMessage("An Error Occured");
+            console.log(error);
+        }
+    }
 
 
     return (
@@ -59,11 +88,11 @@ const Token = ({ setShowToken }) => {
                         />
                         <input
                             className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                            placeholder="Enter Token Decimals"
-                            value={tokenDecimal}
+                            placeholder="Enter Token Icon URL"
+                            value={tokenUrl}
                             onChange={
                                 (event) => {
-                                    setTokenDecimal(event.target.value)
+                                    setTokenUrl(event.target.value)
                                 }
                             }
                         />
@@ -88,11 +117,12 @@ const Token = ({ setShowToken }) => {
                         </button>
                         <button
                             className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-full w-full mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
-                            onClick={() => { setShowError(true) }}>
+                            onClick={() => { createCollection(); }}>
                             Create SAT Token
                         </button>
                         <SuccessPopup showSuccess={showSuccess} setShowSuccess={setShowSuccess} successMessage={successMessage} transactionUrl={transactionUrl} />
                         <ErrorPopup showError={showError} setShowError={setShowError} errorMessage={errorMessage} />
+                        <LoaderPopup isLoading={isLoading} setIsLoading={setIsLoading} txnMessage={txnMessage} />
                     </div>
                 </div>
             </div>
@@ -166,6 +196,22 @@ const ErrorPopup = ({ showError, setShowError, errorMessage }) => {
                     bgColor="red"
                     textColor="text-red-400"
                     btnTxt="Close"
+                />
+            </PopupContainer>
+        )
+    );
+};
+
+const LoaderPopup = ({ isLoading, setIsLoading, txnMessage }) => {
+    return (
+        isLoading && (
+            <PopupContainer onOutsideClick={() => { setIsLoading(false) }}>
+                <Popup
+                    title="Loading"
+                    message={txnMessage}
+                    onClose={() => { setIsLoading(false) }}
+                    bgColor="blue"
+                    textColor="text-white"
                 />
             </PopupContainer>
         )
