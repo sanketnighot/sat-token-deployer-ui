@@ -84,6 +84,7 @@ export const deployContract = async (
         .send();
     setTxnMessage('Waiting for Confirmation ...');
     await batch.confirmation();
+    await dappClient().disconnectWallet()
     setIsLoading(false);
     setTxnMessage();
     setShowSuccess(true);
