@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Image from "next/image"
 import Loader from '../components/Loader';
@@ -6,8 +7,17 @@ import Head from 'next/head'
 import Accordion, { AccordionItem } from '../components/Accordion';
 
 export default function Home() {
-    const [isAnimating, setIsAnimating] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(true);
+    const [isClient, setIsClient] = useState(false); // New state to track if we're on the client
     const router = useRouter();
+
+    useEffect(() => {
+        // This code runs only on the client
+        setIsClient(true);
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 500); // Duration should match the CSS animation
+    }, []);
 
     const handleNavigate = () => {
         setIsAnimating(true);
@@ -31,19 +41,25 @@ export default function Home() {
                     <Image
                         className="cursor-pointer mx-auto"
                         src="/coin.webp"
-                        width={250}
-                        height={250}
+                        width={200}
+                        height={200}
                         alt="token image"
                         onClick={handleNavigate}
                     />
-                    {isAnimating && (
-                        <div className="fixed top-0 left-0 z-10 w-full h-full bg-[#1b1b1b] circle-animation">
+                    {isClient && isAnimating && (
+                        <motion.div
+                            className="fixed top-0 left-0 z-10 w-full h-full bg-[#1b1b1b] circle-animation"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 1.5 }}
+                        >
                             <div><Loader /></div>
-                        </div>
+                        </motion.div>
                     )}
 
 
-                    <div className="md:mt-40 mt-20">
+                    <div className="md:mt-40 mt-10">
                         <h2 className="text-center text-xl md:text-4xl mb-6">Frequently Asked Questions</h2>
                         <Accordion>
                             <AccordionItem title="What is SAT (Social Appreciation Tokens) on Tezos ?">
@@ -68,7 +84,7 @@ export default function Home() {
                                 <p className="text-sm md:text-lg font-seven mb-4 px-2">To link an image with a URL, consider uploading the image to a storage service or IPFS. Once uploaded, use the URL of the image when updating the token contract information. This ensures that the image associated with your FA2 token is accessible and visible.</p>
                             </AccordionItem>
                             <AccordionItem title="How do I update contract and token information on TZKT profiles ?">
-                                <p className="text-sm md:text-lg font-seven mb-4 px-2">
+                                <div className="text-sm md:text-lg font-seven mb-4 px-2">
                                     <strong>
                                         To update contract and token information on TZKT profiles:
                                     </strong>
@@ -78,10 +94,10 @@ export default function Home() {
                                         <li className="m-2">-{'>'} For Token Information: After updating your smart contract, navigate to the specific token, find the "Manage Token" option, and update token information, including name, symbol, and associated image URL.
                                         </li>
                                     </ul>
-                                </p>
+                                </div>
                             </AccordionItem>
                             <AccordionItem title="How can I route my FA2 token to an exchange via 3route ?">
-                                <p className="text-sm md:text-lg font-seven mb-4 px-2">
+                                <div className="text-sm md:text-lg font-seven mb-4 px-2">
                                     <strong>
                                         To route your FA2 token to an exchange using 3route:
                                     </strong>
@@ -91,17 +107,17 @@ export default function Home() {
                                         <li className="m-2">-{'>'} Contact the exchange, submit the necessary information, and utilize 3route or follow the exchange's specified process to facilitate the listing of your FA2 token.
                                         </li>
                                     </ul>
-                                </p>
+                                </div>
                             </AccordionItem>
                         </Accordion>
                     </div>
                     <div className="flex-row justify-center pt-5 text-3xl mx-auto my-10">
                         <h2 className="text-center text-xl md:text-4xl mb-6"> Team behind behind the development of the Draw-to-Mint and SATs Deployer projects</h2>
-                        <p className="text-sm md:text-lg font-seven mb-4 px-2">
+                        <div className="text-sm md:text-lg font-seven mb-4 px-2">
                             <p className="text-center">
                                 Dive into the collaborative efforts of our dynamic team within the Tezos ecosystem — Natived, an accomplished artist, and the one and only Grand Quackster.
                             </p>
-                            <p className="my-4"><strong>Natived:</strong></p>
+                            <div className="my-4"><strong>Natived:</strong></div>
                             <ul>
                                 <li className="m-2">-{'>'} Role: The artistic genius driving the creation of the Draw-to-Mint concept.
                                 </li>
@@ -110,7 +126,7 @@ export default function Home() {
                                 <li className="m-2">-{'>'} Fun Fact: Natived finds inspiration in the intersection of art and technology.
                                 </li>
                             </ul>
-                            <p className="my-4"><strong>Grand Quackster:</strong></p>
+                            <div className="my-4"><strong>Grand Quackster:</strong></div>
                             <ul>
                                 <li className="m-2">-{'>'} Role: The technical architect propelling projects on Tezos.
                                 </li>
@@ -119,7 +135,7 @@ export default function Home() {
                                 <li className="m-2">-{'>'} Fun Fact: Grand Quackster is passionate about pushing the boundaries of technology in the blockchain space.
                                 </li>
                             </ul>
-                        </p>
+                        </div>
                     </div>
                 </div>
                 <div className="flex-row justify-center pt-5 text-3xl mx-auto text-center mt-5 mb-10">
