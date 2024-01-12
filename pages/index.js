@@ -16,7 +16,7 @@ export default function Home() {
         setIsClient(true);
         setTimeout(() => {
             setIsAnimating(false);
-        }, 500); // Duration should match the CSS animation
+        }, 100); // Duration should match the CSS animation
     }, []);
 
     const handleNavigate = () => {
