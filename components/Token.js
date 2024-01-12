@@ -213,11 +213,11 @@ const ErrorPopup = ({ showError, setShowError, errorMessage }) => {
 const LoaderPopup = ({ isLoading, setIsLoading, txnMessage }) => {
     return (
         isLoading && (
-            <PopupContainer onOutsideClick={() => { }}>
+            <PopupContainer onOutsideClick={() => { setIsLoading(false) }}>
                 <Popup
                     title="Loading"
                     message={txnMessage}
-                    onClose={() => { }}
+                    onClose={() => { setIsLoading(false) }}
                     bgColor="blue"
                     textColor="text-white"
                 />
