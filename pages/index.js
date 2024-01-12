@@ -44,7 +44,7 @@ export default function Home() {
 
 
                     <div className="md:mt-40 mt-20">
-                        <h2 className="text-center text-xl md:text-4xl mb-6">{'<'} Frequently Asked Questions {'>'}</h2>
+                        <h2 className="text-center text-xl md:text-4xl mb-6">Frequently Asked Questions</h2>
                         <Accordion>
                             <AccordionItem title="What is SAT (Social Appreciation Tokens) on Tezos ?">
                                 <p className="text-sm md:text-lg font-seven mb-4 px-2">SAT stands for Social Appreciation Tokens, a revolutionary tokenization system on the Tezos network that transforms the relationship between artists and their supporters. SATs operate on the principle of decentralized promotion and ownership, creating a symbiotic ecosystem that benefits both artists and token holders.</p>
@@ -96,7 +96,6 @@ export default function Home() {
                         </Accordion>
                     </div>
                     <div className="flex-row justify-center pt-5 text-3xl mx-auto my-10">
-
                         <h2 className="text-center text-xl md:text-4xl mb-6"> Team behind behind the development of the Draw-to-Mint and SATs Deployer projects</h2>
                         <p className="text-sm md:text-lg font-seven mb-4 px-2">
                             <p className="text-center">
