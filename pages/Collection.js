@@ -18,8 +18,8 @@ const Collection = () => {
             </Head>
             <div className="container min-h-24 w-full md:w-3/6 p-8">
                 <div className="mb-8">
-                    <h1 className="text-center text-3xl md:text-5xl mb-2">Soical Appreciation Token</h1>
-                    <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} for the great Artists of Tezos {'>'}</h2>
+                    <h1 className="text-center text-3xl md:text-5xl mb-2">Soical Appreciation Tokens</h1>
+                    <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
                 </div>
                 <form
                     className="border-2 border-[#39FF14] ring-2 ring-[#39FF14] shadow-lg"

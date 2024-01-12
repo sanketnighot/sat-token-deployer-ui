@@ -46,8 +46,8 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
         <div className="flex flex-col items-center sm:justify-center md:jstify-center fixed inset-y-12 lg:top-10 left-0 z-10 w-full h-full  bg-[#1b1b1b] overflow-y-auto">
             <div className="container min-h-24 w-full md:w-3/6 p-8">
                 <div className="mb-8">
-                    <h1 className="text-center text-3xl md:text-5xl mb-2">Social Appreciation Token</h1>
-                    <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} for the great Artists of Tezos {'>'}</h2>
+                    <h1 className="text-center text-3xl md:text-5xl mb-2">Social Appreciation Tokens</h1>
+                    <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
                 </div>
                 <form className="border-2 border-[#39FF14] ring-2 ring-[#39FF14] shadow-lg p-5"
                     onSubmit={async (e) => {
@@ -116,6 +116,9 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                                 }
                             }
                         />
+                    </div>
+                    <div className="flex-row md:flex my-2 mx-4 ">
+                        <h3 className="text-xl font-seven ml-auto">Transaction Fees: 5 ꜩ</h3>
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
                         <button
