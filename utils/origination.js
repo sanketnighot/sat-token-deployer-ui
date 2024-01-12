@@ -8,7 +8,7 @@ import { BigNumber } from 'bignumber.js';
 
 
 const FEE_RECIPIENT = 'tz1gPGbygTTqXPt3saqpnPW5YviLUGSB36rx';
-const FEE = 2;
+export const FEE = 2;
 const DECIMAL = 6;
 
 BigNumber.config({ DECIMAL_PLACES: DECIMAL })

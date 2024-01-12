@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { deployContract } from '../utils/origination';
+import { deployContract, FEE } from '../utils/origination';
 
 const Token = ({ collectionName, collectionAdmin, collectionDescription, setShowToken }) => {
     const [tokenName, setTokenName] = useState();
@@ -118,7 +118,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                         />
                     </div>
                     <div className="flex-row md:flex my-2 mx-4 ">
-                        <h3 className="text-xl font-seven ml-auto">Transaction Fees: 5 TEZ</h3>
+                        <h3 className="text-xl font-seven ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3>
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
                         <button
