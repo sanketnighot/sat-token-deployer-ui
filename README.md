@@ -28,10 +28,10 @@ Note: There is no modifications Needed in this smart contracts.
 
     ```jsx
     <AccordionItem title="Your Question Here">
-        <p className="text-sm md:text-lg font-seven mb-4 px-2">
+      <p className="text-sm md:text-lg font-seven mb-4 px-2">
         Your Answer Here
-        </p>
-        </AccordionItem>
+      </p>
+    </AccordionItem>
     ```
 
     At line 126, You need add link to your social media in href tag.
