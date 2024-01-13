@@ -33,6 +33,8 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                 setIsLoading,
                 setTxnMessage,
                 setSuccessMessage,
+                setErrorMessage,
+                setShowError
             )
         } catch (error) {
             setIsLoading(false);
@@ -216,7 +218,7 @@ const ErrorPopup = ({ showError, setShowError, errorMessage }) => {
 const LoaderPopup = ({ isLoading, setIsLoading, txnMessage }) => {
     return (
         isLoading && (
-            <PopupContainer onOutsideClick={() => { setIsLoading(false) }}>
+            <PopupContainer>
                 <Popup
                     title="Loading"
                     message={txnMessage}
