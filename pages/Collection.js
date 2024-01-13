@@ -10,14 +10,14 @@ const Collection = () => {
     const [collectionDescription, setCollectionDescription] = useState();
 
     return (
-        <div className="flex flex-wrap justify-center items-center min-h-screen">
+        <div className="md:h-[55rem] md:mt-1 mt-10 md:mb-1 mb-20 flex items-center justify-center">
             <Head>
                 <title>SATs Token Deployer</title>
                 <meta property="og:title" content="SAT Token Deployer" />
                 <meta property="og:description" content="Special Appreciation Token for Tezos Artist" />
                 <meta property="og:site_name" content="SAT Token Deployer" />
             </Head>
-            <div className="container min-h-24 w-full md:w-3/6 p-8">
+            {!showToken && <div className="container w-5/6 md:w-3/6">
                 <div className="mb-8">
                     <h1 className="text-center text-3xl md:text-5xl mb-2">Soical Appreciation Tokens</h1>
                     <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
@@ -69,15 +69,14 @@ const Collection = () => {
                         />
                     </div>
                     <div className="flex align-center">
-                        {/* <button className="mx-auto text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-40 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900">
+                        <button className="mx-auto text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-40 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900">
                             Next
-                        </button> */}
-                        <Button text="Next"></Button>
-
+                        </button>
                     </div>
                 </form>
-                {showToken && <Token collectionName={collectionName} collectionAdmin={collectionAdmin} collectionDescription={collectionDescription} setShowToken={setShowToken} />}
-            </div>
+
+            </div>}
+            {showToken && <Token collectionName={collectionName} collectionAdmin={collectionAdmin} collectionDescription={collectionDescription} setShowToken={setShowToken} />}
         </div>
     );
 }

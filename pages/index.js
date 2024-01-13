@@ -19,9 +19,6 @@ export default function Home() {
                 <div className="container min-h-24 md:w-4/6 w-6/6 p-8">
                     <AccordionComp />
                 </div>
-                <div className="flex-row justify-center pt-5 text-3xl mx-auto text-center mt-5 mb-10">
-                    <h3>Co-created by <a className="text-extrabold underline" href="#" target="_blank">Natived</a> and <a href="#" target="_blank" className="text-extrabold underline">The Grand Quackster</a></h3>
-                </div>
             </div>
         </>
     )
