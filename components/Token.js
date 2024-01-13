@@ -122,12 +122,12 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                 </div>
                 <div className="flex-row justify-center md:flex text-center">
                     <button
-                        className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-full w-5/6 px-4 mx-2 py-1 bg-green-900 hover:text-green-900 text-[#a2ff00] hover:bg-[#a2ff00]"
+                        className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
                         onClick={() => { setShowToken(false) }}>
                         Previous
                     </button>
                     <button
-                        className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-full w-full mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
+                        className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
                     >
                         Create SAT Token
                     </button>
