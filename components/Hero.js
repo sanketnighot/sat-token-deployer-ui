@@ -29,7 +29,7 @@ const Hero = () => {
             <div className="text-center">
                 <h1 className="text-3xl md:text-6xl mb-2">Social Appreciation Tokens</h1>
                 <h2 className="text-xl md:text-4xl mb-6">{'<'} For the great Artists of Tezos {'>'}</h2>
-                <p className="text-sm md:text-xl font-seven mb-4">SAT's stands for Social Appreciation Tokens, a revolutionary tokenization system on the Tezos blockchain that transforms the relationship between artists and their collectors. SAT's operate on the principle of decentralized promotion and ownership, creating a symbiotic ecosystem that benefits both artists and token holders.</p>
+                <p className="text-lg md:text-3xl font-seven mb-4">SAT's stands for Social Appreciation Tokens, a revolutionary tokenization system on the Tezos blockchain that transforms the relationship between artists and their collectors. SAT's operate on the principle of decentralized promotion and ownership, creating a symbiotic ecosystem that benefits both artists and token holders.</p>
                 <Image
                     className="cursor-pointer mx-auto"
                     src="/coin.webp"
