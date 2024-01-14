@@ -15,7 +15,7 @@ export const dappClient = () => {
     async function init() {
         const dAppInfo = {
             name: "SAT Token Deployer",
-            iconUrl: "/assets/logo.png",
+            iconUrl: "/logo1.png",
             preferredNetwork: NETWORK,
             colorMode: ColorMode.DARK,
             appUrl: "https://example.com",
