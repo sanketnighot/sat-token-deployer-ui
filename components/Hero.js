@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Image from "next/image"
-import Loader from '../components/Assets/Loader';
+import Mask from '../components/Assets/Mask';
 
 const Hero = () => {
     const [isAnimating, setIsAnimating] = useState(true);
@@ -48,7 +48,7 @@ const Hero = () => {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 1.5 }}
                 >
-                    <div><Loader /></div>
+                    <div><Mask /></div>
                 </motion.div>
             )}
         </div>
