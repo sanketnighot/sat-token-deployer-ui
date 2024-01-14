@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "next/image"
 
-export default function Loader() {
+export default function Mask() {
     return (
         <>
             <div className="flex flex-wrap justify-center items-center min-h-screen">
