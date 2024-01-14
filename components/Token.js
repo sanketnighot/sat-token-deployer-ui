@@ -46,98 +46,100 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
 
 
     return (
-        <div className="container min-h-24 w-5/6 md:w-3/6 p-8">
-            <div className="mb-8">
-                <h1 className="text-center text-3xl md:text-5xl mb-2">Social Appreciation Tokens</h1>
-                <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
+        <div className="md:h-[55rem] md:mb-1 flex items-center justify-center text-[#00ff00]">
+            <div className="container w-5/6 md:w-3/6">
+                <div className="mb-8">
+                    <h1 className="text-center text-3xl md:text-5xl mb-2">Social Appreciation Tokens</h1>
+                    <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
+                </div>
+                <form className="border-2 border-[#39FF14] ring-2 ring-[#39FF14] shadow-lg p-5"
+                    onSubmit={async (e) => {
+                        e.preventDefault();
+                        setShowToken(true)
+                        await createCollection();
+                    }}>
+                    <h3 className="text-center text-xl md:text-3xl font-seven mb-4">Enter Token Details</h3>
+                    <div className="flex-row justify-center md:flex text-center">
+                        <input
+                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                            placeholder="Enter Token Name"
+                            value={tokenName}
+                            required
+                            onChange={
+                                (event) => {
+                                    setTokenName(event.target.value)
+                                }
+                            }
+                        />
+                        <input
+                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                            placeholder="Enter Token Symbol"
+                            value={tokenSymbol}
+                            required
+                            onChange={
+                                (event) => {
+                                    setTokenSymbol(event.target.value)
+                                }
+                            }
+                        />
+                    </div>
+                    <div className="flex-row justify-center md:flex text-center">
+                        <input
+                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                            placeholder="Enter Token Supply"
+                            value={tokenSupply}
+                            required
+                            onChange={
+                                (event) => {
+                                    setTokenSupply(event.target.value)
+                                }
+                            }
+                        />
+                        <input
+                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                            placeholder="Enter Token Icon URL"
+                            value={tokenUrl}
+                            required
+                            onChange={
+                                (event) => {
+                                    setTokenUrl(event.target.value)
+                                }
+                            }
+                        />
+                    </div>
+                    <div className="flex-row justify-center md:flex text-center mb-4">
+                        <textarea
+                            required
+                            className="text-left md:mx-2 w-5/6 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full px-2"
+                            placeholder="Describe Token here ..."
+                            value={tokenDescription}
+                            onChange={
+                                (event) => {
+                                    setTokenDescription(event.target.value)
+                                }
+                            }
+                        />
+                    </div>
+                    <div className="flex-row md:flex my-2 mx-4 ">
+                        <h3 className="text-xl font-seven ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3>
+                    </div>
+                    <div className="flex-row justify-center md:flex text-center">
+                        <button
+                            className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
+                            onClick={() => { setShowToken(false) }}>
+                            Previous
+                        </button>
+                        <button
+                            className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
+                        >
+                            Create SAT Token
+                        </button>
+                        <SuccessPopup showSuccess={showSuccess} setShowSuccess={setShowSuccess} successMessage={successMessage} transactionUrl={transactionUrl} />
+                        <ErrorPopup showError={showError} setShowError={setShowError} errorMessage={errorMessage} />
+                        <LoaderPopup isLoading={isLoading} setIsLoading={setIsLoading} txnMessage={txnMessage} />
+                    </div>
+                </form>
             </div>
-            <form className="border-2 border-[#39FF14] ring-2 ring-[#39FF14] shadow-lg p-5"
-                onSubmit={async (e) => {
-                    e.preventDefault();
-                    setShowToken(true)
-                    await createCollection();
-                }}>
-                <h3 className="text-center text-xl md:text-3xl font-seven mb-4">Enter Token Details</h3>
-                <div className="flex-row justify-center md:flex text-center">
-                    <input
-                        className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                        placeholder="Enter Token Name"
-                        value={tokenName}
-                        required
-                        onChange={
-                            (event) => {
-                                setTokenName(event.target.value)
-                            }
-                        }
-                    />
-                    <input
-                        className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                        placeholder="Enter Token Symbol"
-                        value={tokenSymbol}
-                        required
-                        onChange={
-                            (event) => {
-                                setTokenSymbol(event.target.value)
-                            }
-                        }
-                    />
-                </div>
-                <div className="flex-row justify-center md:flex text-center">
-                    <input
-                        className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                        placeholder="Enter Token Supply"
-                        value={tokenSupply}
-                        required
-                        onChange={
-                            (event) => {
-                                setTokenSupply(event.target.value)
-                            }
-                        }
-                    />
-                    <input
-                        className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                        placeholder="Enter Token Icon URL"
-                        value={tokenUrl}
-                        required
-                        onChange={
-                            (event) => {
-                                setTokenUrl(event.target.value)
-                            }
-                        }
-                    />
-                </div>
-                <div className="flex-row justify-center md:flex text-center mb-4">
-                    <textarea
-                        required
-                        className="text-left md:mx-2 w-5/6 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full px-2"
-                        placeholder="Describe Token here ..."
-                        value={tokenDescription}
-                        onChange={
-                            (event) => {
-                                setTokenDescription(event.target.value)
-                            }
-                        }
-                    />
-                </div>
-                <div className="flex-row md:flex my-2 mx-4 ">
-                    <h3 className="text-xl font-seven ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3>
-                </div>
-                <div className="flex-row justify-center md:flex text-center">
-                    <button
-                        className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
-                        onClick={() => { setShowToken(false) }}>
-                        Previous
-                    </button>
-                    <button
-                        className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
-                    >
-                        Create SAT Token
-                    </button>
-                    <SuccessPopup showSuccess={showSuccess} setShowSuccess={setShowSuccess} successMessage={successMessage} transactionUrl={transactionUrl} />
-                    <ErrorPopup showError={showError} setShowError={setShowError} errorMessage={errorMessage} />
-                    <LoaderPopup isLoading={isLoading} setIsLoading={setIsLoading} txnMessage={txnMessage} />
-                </div>
-            </form>
         </div>
 
     );

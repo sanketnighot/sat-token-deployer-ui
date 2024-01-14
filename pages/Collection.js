@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Token from '../components/Token';
 import Head from 'next/head';
-import Button from '@/components/Assets/Button'
 
 const Collection = () => {
     const [showToken, setShowToken] = useState(false);

@@ -16,7 +16,7 @@ export default function Home() {
                 <div className="container w-5/6">
                     <Hero />
                 </div>
-                <div className="container min-h-24 md:w-4/6 w-6/6 p-8">
+                <div id="faq" className="container min-h-24 md:w-4/6 w-6/6 p-8">
                     <AccordionComp />
                 </div>
             </div>
