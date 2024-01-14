@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from 'next/link';
 import { dappClient } from "@/utils/walletconnect";
+import Image from "next/image"
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
@@ -47,15 +48,23 @@ const Header = () => {
                         <div>
                             {/* Website Logo */}
                             <a href="/" className="flex items-center py-4 px-2">
-                                <span className="font-semibold text-White-500 font-black text-2xl md:text-3xl">SAT Token Deployer</span>
+                                <Image
+                                    className="cursor-pointer mx-auto"
+                                    src="/logo.png"
+                                    width={150}
+                                    height={100}
+                                    alt="token image"
+                                    onClick={handleNavigate}
+                                />
                             </a>
                         </div>
                     </div>
-                    <div className="hidden md:flex space-x-1 text-2xl">
+                    <div className="hidden md:flex space-x-1 text-2xl items-center">
                         <Link href="/" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
                             <span className="flex text-center">
                                 Home
-                            </span></Link>
+                            </span>
+                        </Link>
                         <Link href="/Collection" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
                             <span className="flex text-center">
                                 Collection
