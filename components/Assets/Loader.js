@@ -9,9 +9,9 @@ export default function Loader() {
                 <div className="container min-h-24 w-4/6 p-8">
                     <Image
                         className="cursor-pointer mx-auto"
-                        src="/coin.webp"
-                        width={250}
-                        height={250}
+                        src="/loader.webp"
+                        width={600}
+                        height={600}
                         alt="token image"
                     />
                 </div>

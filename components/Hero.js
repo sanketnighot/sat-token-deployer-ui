@@ -38,6 +38,7 @@ const Hero = () => {
                     alt="token image"
                     onClick={handleNavigate}
                 />
+                <h2 className="text-md md:text-2xl mb-2">Click coin to create your own collection</h2>
             </div>
             {isClient && isAnimating && (
                 <motion.div

@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Link from 'next/link';
-import { dappClient } from "@/utils/walletconnect";
 import Image from "next/image"
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [account, setAccount] = useState(false);
     const router = useRouter();
 
-    useEffect(() => {
-        (async () => {
-            // TODO 5.b - Get the active account
-            const accounts = await dappClient().getAccount();
-            setAccount(accounts.account?.address);
-        })();
-    }, []);
 
     const handleNavigate = (link) => {
         setIsMenuOpen(false);
@@ -26,18 +17,6 @@ const Header = () => {
         } else if (link === "FAQ") {
             router.push('/#faq');
         }
-    };
-
-    const onConnectWallet = async () => {
-        console.log("connect wallet");
-        await dappClient().connectAccount();
-        const accounts = await dappClient().getAccount();
-        setAccount(accounts.account);
-    };
-
-    const onDisconnectWallet = async () => {
-        await dappClient().disconnectWallet();
-        setAccount(false);
     };
 
     return (
