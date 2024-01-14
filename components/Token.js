@@ -4,12 +4,12 @@ import { deployContract, FEE } from '../utils/origination';
 import Footer from './Assets/Footer';
 
 const Token = ({ collectionName, collectionAdmin, collectionDescription, setShowToken }) => {
-    const [tokenName, setTokenName] = useState();
-    const [tokenSymbol, setTokenSymbol] = useState();
-    const [tokenSupply, setTokenSupply] = useState();
-    const [tokenUrl, setTokenUrl] = useState();
-    const [tokenDescription, setTokenDescription] = useState();
-    const [transactionUrl, setTransactionUrl] = useState();
+    const [tokenName, setTokenName] = useState('');
+    const [tokenSymbol, setTokenSymbol] = useState('');
+    const [tokenSupply, setTokenSupply] = useState('');
+    const [tokenUrl, setTokenUrl] = useState('');
+    const [tokenDescription, setTokenDescription] = useState('');
+    const [transactionUrl, setTransactionUrl] = useState('');
     const [showError, setShowError] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState("Error Message");
@@ -85,6 +85,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
                         <input
+                            type="number"
                             className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="Enter Token Supply"
                             value={tokenSupply}
@@ -203,7 +204,7 @@ const SuccessPopup = ({ showSuccess, setShowSuccess, successMessage, transaction
 const ErrorPopup = ({ showError, setShowError, errorMessage }) => {
     return (
         showError && (
-            <PopupContainer onOutsideClick={() => setShowError(false)}>
+            <PopupContainer>
                 <Popup
                     title="Error"
                     message={errorMessage}

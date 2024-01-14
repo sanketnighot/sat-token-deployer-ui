@@ -4,9 +4,9 @@ import Head from 'next/head';
 
 const Collection = () => {
     const [showToken, setShowToken] = useState(false);
-    const [collectionName, setCollectionName] = useState();
-    const [collectionAdmin, setCollectionAdmin] = useState();
-    const [collectionDescription, setCollectionDescription] = useState();
+    const [collectionName, setCollectionName] = useState('');
+    const [collectionAdmin, setCollectionAdmin] = useState('');
+    const [collectionDescription, setCollectionDescription] = useState('');
 
     return (
         <>
