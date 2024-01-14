@@ -16,9 +16,9 @@ const Collection = () => {
                 <meta property="og:description" content="Special Appreciation Token for Tezos Artist" />
                 <meta property="og:site_name" content="SAT Token Deployer" />
             </Head>
-            {!showToken && <div className="md:h-[55rem] md:mb-1 flex items-center justify-center text-[#00ff00]">
+            {!showToken && <div className="md:h-[45rem] flex items-center justify-center text-[#00ff00]">
                 <div className="container w-5/6 md:w-3/6">
-                    <div className="mb-8">
+                    <div className="mb-4">
                         <h1 className="text-center text-3xl md:text-5xl mb-2">Soical Appreciation Tokens</h1>
                         <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
                     </div>
@@ -31,7 +31,7 @@ const Collection = () => {
                             <input
                                 className="md:text-left md:mr-4 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
                                 required
-                                placeholder="Enter Collection Name ..."
+                                placeholder="Eg. My Token Deeployer"
                                 value={collectionName}
                                 onChange={
                                     (event) => {
@@ -44,7 +44,7 @@ const Collection = () => {
                             <p className="md:text-left md:ml-4 text-sm md:text-xl font-seven md:mb-4 md:w-2/6 m-1">Enter token Admin address</p>
                             <input
                                 className="md:text-left md:mr-4 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
-                                placeholder="Enter Admin Address ..."
+                                placeholder="Eg. tz1yourTezosWalletAddressHere"
                                 value={collectionAdmin}
                                 required
                                 onChange={
@@ -58,7 +58,7 @@ const Collection = () => {
                             <p className="md:text-left md:ml-4 text-sm md:text-xl font-seven md:mb-4 md:w-2/6 m-1">Describe your token in few words</p>
                             <textarea
                                 className="text-left md:mr-4 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full p-2"
-                                placeholder="Describe Collection here ..."
+                                placeholder="The Purpose of my SAT Token is ..."
                                 value={collectionDescription}
                                 required
                                 onChange={

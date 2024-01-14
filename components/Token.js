@@ -46,7 +46,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
 
 
     return (
-        <div className="md:h-[55rem] md:mb-1 flex items-center justify-center text-[#00ff00]">
+        <div className="md:h-[45rem] flex items-center justify-center text-[#00ff00]">
             <div className="container w-5/6 md:w-3/6">
                 <div className="mb-8">
                     <h1 className="text-center text-3xl md:text-5xl mb-2">Social Appreciation Tokens</h1>
@@ -62,7 +62,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                     <div className="flex-row justify-center md:flex text-center">
                         <input
                             className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                            placeholder="Enter Token Name"
+                            placeholder="My Token Name"
                             value={tokenName}
                             required
                             onChange={
@@ -73,7 +73,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                         />
                         <input
                             className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                            placeholder="Enter Token Symbol"
+                            placeholder="My Token Symbol"
                             value={tokenSymbol}
                             required
                             onChange={
@@ -87,7 +87,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                         <input
                             type="number"
                             className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                            placeholder="Enter Token Supply"
+                            placeholder="Total tokens I want"
                             value={tokenSupply}
                             required
                             onChange={
@@ -98,7 +98,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                         />
                         <input
                             className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                            placeholder="Enter Token Icon URL"
+                            placeholder="My token URL is"
                             value={tokenUrl}
                             required
                             onChange={
@@ -112,7 +112,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                         <textarea
                             required
                             className="text-left md:mx-2 w-5/6 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full px-2"
-                            placeholder="Describe Token here ..."
+                            placeholder="This token will be used as ..."
                             value={tokenDescription}
                             onChange={
                                 (event) => {

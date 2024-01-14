@@ -12,7 +12,7 @@ export default function Home() {
                 <meta property="og:description" content="Special Appreciation Token for Tezos Artist" />
                 <meta property="og:site_name" content="SAT Token Deployer" />
             </Head>
-            <div className="flex flex-wrap justify-center items-center mt-10">
+            <div className="flex flex-wrap justify-center items-center">
                 <div className="container w-5/6">
                     <Hero />
                 </div>
