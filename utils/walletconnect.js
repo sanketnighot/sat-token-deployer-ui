@@ -1,9 +1,5 @@
 import {
-    AccountInfo,
-    BlockExplorer,
     ColorMode,
-    DAppClientOptions,
-    Network,
     NetworkType,
 } from "@airgap/beacon-sdk";
 import { BeaconWallet } from "@taquito/beacon-wallet";

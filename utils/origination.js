@@ -1,7 +1,4 @@
-import React from 'react';
 import { dappClient } from './walletconnect';
-import { TezosToolkit } from '@taquito/taquito';
-import { char2Bytes } from '@taquito/utils';
 import contractCode from './contract_code.json';
 import { MichelsonMap } from '@taquito/michelson-encoder';
 import { BigNumber } from 'bignumber.js';

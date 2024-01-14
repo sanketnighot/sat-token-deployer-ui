@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { deployContract, FEE } from '../utils/origination';
-import Footer from './Assets/Footer';
 
 const Token = ({ collectionName, collectionAdmin, collectionDescription, setShowToken }) => {
     const [tokenName, setTokenName] = useState('');

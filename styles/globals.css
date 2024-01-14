@@ -55,23 +55,6 @@ p {
   border-color: var(--color-outline);
 }
 
-/* .text-base {
-  font-size: 1rem; 
-}
-
-.md:text-lg {
-  font-size: 1.125rem; 
-}
-
-.lg:text-xl {
-  font-size: 5.25rem; 
-}
-
-.xl:text-2xl {
-  font-size: 100rem;
-} */
-
-
 .circle-animation {
   animation: circleReveal 3.0s ease forwards;
 }
