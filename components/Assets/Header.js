@@ -88,19 +88,19 @@ const Header = () => {
             </div>
             {/* Mobile Menu */}
             <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} drop-shadow-xl`}>
-                <button className="block py-2 px-4 text-xl transition duration-300"
+                <button className="block py-2 px-4 text-xl transition duration-300 w-full"
                     onClick={() => { handleNavigate("Home") }}>
                     <span className="flex text-center">
                         Home
                     </span>
                 </button>
-                <button className="block py-2 px-4 text-xl transition duration-300"
+                <button className="block py-2 px-4 text-xl transition duration-300 w-full"
                     onClick={() => { handleNavigate("Collection") }}>
                     <span className="flex text-center">
                         Collection
                     </span>
                 </button>
-                <button className="block py-2 px-4 text-xl transition duration-300"
+                <button className="block py-2 px-4 text-xl transition duration-300 w-full"
                     onClick={() => { handleNavigate("FAQ") }}>
                     <span className="flex text-center">
                         FAQ
