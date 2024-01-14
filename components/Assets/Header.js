@@ -52,16 +52,16 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="hidden md:flex space-x-1 text-2xl">
-                        <Link href="/" className="py-4 px-2 font-semibold transition duration-300">
+                        <Link href="/" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
                             <span className="flex text-center">
                                 Home
                             </span></Link>
-                        <Link href="/Collection" className="py-4 px-2 font-semibold transition duration-300">
+                        <Link href="/Collection" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
                             <span className="flex text-center">
                                 Collection
                             </span>
                         </Link>
-                        <Link href="/#faq" className="py-4 px-2 font-semibold transition duration-300">
+                        <Link href="/#faq" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
                             <span className="flex text-center">
                                 FAQ
                             </span>
@@ -88,19 +88,19 @@ const Header = () => {
             </div>
             {/* Mobile Menu */}
             <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} drop-shadow-xl`}>
-                <button className="block py-2 px-4 text-xl transition duration-300 w-full"
+                <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
                     onClick={() => { handleNavigate("Home") }}>
                     <span className="flex text-center">
                         Home
                     </span>
                 </button>
-                <button className="block py-2 px-4 text-xl transition duration-300 w-full"
+                <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
                     onClick={() => { handleNavigate("Collection") }}>
                     <span className="flex text-center">
                         Collection
                     </span>
                 </button>
-                <button className="block py-2 px-4 text-xl transition duration-300 w-full"
+                <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
                     onClick={() => { handleNavigate("FAQ") }}>
                     <span className="flex text-center">
                         FAQ
