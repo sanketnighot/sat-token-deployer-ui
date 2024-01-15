@@ -62,10 +62,10 @@ export const deployContract = async (
             ledger: MichelsonMap.fromLiteral({}),
             metadata: metadata,
             operators: {},
-            supply: collectionData.tokenSupply,
+            supply: (collectionData.tokenSupply * 1000000),
             token_metadata: tokenMetadata,
         }
-        storage.ledger.set(collectionData.collectionAdmin, collectionData.tokenSupply)
+        storage.ledger.set(collectionData.collectionAdmin, (collectionData.tokenSupply * 1000000))
         setTxnMessage('Waiting for you to sign Transaction ...');
         const tezos = await dappClient().tezos();
         const batch = await tezos.wallet.batch()
