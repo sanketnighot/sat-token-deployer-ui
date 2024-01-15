@@ -9,8 +9,8 @@ export default function Mask() {
                     <Image
                         className="mx-auto"
                         src="/loader.webp"
-                        width={600}
-                        height={600}
+                        width={500}
+                        height={500}
                         alt="token image"
                     />
                 </div>

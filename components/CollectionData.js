@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { useRouter } from 'next/router';
 import { deployContract, FEE } from '../utils/origination';
 
-const Token = ({ collectionName, collectionAdmin, collectionDescription, setShowToken }) => {
+const CollectionData = () => {
+    const [showToken, setShowToken] = useState(false);
+    const [collectionName, setCollectionName] = useState('');
+    const [collectionAdmin, setCollectionAdmin] = useState('');
+    const [collectionDescription, setCollectionDescription] = useState('');
     const [tokenName, setTokenName] = useState('');
     const [tokenSymbol, setTokenSymbol] = useState('');
     const [tokenSupply, setTokenSupply] = useState('');
@@ -43,14 +47,65 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
         }
     }
 
-
-    return (
-        <div className="md:h-[45rem] flex items-center justify-center text-[#00ff00]">
-            <div className="container w-5/6 md:w-3/6">
-                <div className="mb-8">
-                    <h1 className="text-center text-3xl md:text-5xl mb-2">Social Appreciation Tokens</h1>
-                    <h2 className="text-center text-xl md:text-3xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
-                </div>
+    if (!showToken) {
+        return (
+            <>
+                <form
+                    onSubmit={(e) => { e.preventDefault(); setShowToken(true) }}>
+                    <h3 className="text-center text-2xl md:text-4xl mb-2 text-[#26fb26]">Create your own SAT Token</h3>
+                    <div className="flex-row justify-center md:flex text-center">
+                        <p className="md:text-left md:ml-4 text-sm md:text-xl md:mb-6 font-seven md:w-2/6 m-1">Define your collection name</p>
+                        <input
+                            className="md:text-left md:mr-4 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
+                            required
+                            placeholder="Eg. My Token Deeployer"
+                            value={collectionName}
+                            onChange={
+                                (event) => {
+                                    setCollectionName(event.target.value)
+                                }
+                            }
+                        />
+                    </div>
+                    <div className="flex-row justify-center md:flex text-center">
+                        <p className="md:text-left md:ml-4 text-sm md:text-xl font-seven md:mb-4 md:w-2/6 m-1">Enter token Admin address</p>
+                        <input
+                            className="md:text-left md:mr-4 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
+                            placeholder="Eg. tz1yourTezosWalletAddressHere"
+                            value={collectionAdmin}
+                            required
+                            onChange={
+                                (event) => {
+                                    setCollectionAdmin(event.target.value)
+                                }
+                            }
+                        />
+                    </div>
+                    <div className="flex-row justify-center md:flex text-center">
+                        <p className="md:text-left md:ml-4 text-sm md:text-xl font-seven md:mb-4 md:w-2/6 m-1">Describe your token in few words</p>
+                        <textarea
+                            className="text-left md:mr-4 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full p-2"
+                            placeholder="The Purpose of my SAT Token is ..."
+                            value={collectionDescription}
+                            required
+                            onChange={
+                                (event) => {
+                                    setCollectionDescription(event.target.value)
+                                }
+                            }
+                        />
+                    </div>
+                    <div className="flex align-center">
+                        <button className="mx-auto text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-40 px-4 py-1 bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900">
+                            Next
+                        </button>
+                    </div>
+                </form>
+            </>
+        )
+    } else if (showToken) {
+        return (
+            <>
                 <form className="border-2 border-[#39FF14] ring-2 ring-[#39FF14] shadow-lg p-5"
                     onSubmit={async (e) => {
                         e.preventDefault();
@@ -97,7 +152,7 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                         />
                         <input
                             className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-                            placeholder="My token URL is"
+                            placeholder="My token Image URL is"
                             value={tokenUrl}
                             required
                             onChange={
@@ -139,14 +194,13 @@ const Token = ({ collectionName, collectionAdmin, collectionDescription, setShow
                         <LoaderPopup isLoading={isLoading} setIsLoading={setIsLoading} txnMessage={txnMessage} />
                     </div>
                 </form>
-            </div>
-        </div>
+            </>
+        )
+    }
 
-    );
 }
 
-
-export default Token;
+export default CollectionData
 
 const PopupContainer = ({ children, onOutsideClick }) => (
     <div className="fixed inset-0 z-40 flex items-center justify-center p-4" onClick={onOutsideClick}>

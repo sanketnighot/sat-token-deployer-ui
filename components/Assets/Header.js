@@ -12,8 +12,8 @@ const Header = () => {
         setIsMenuOpen(false);
         if (link === "Home") {
             router.push('/');
-        } else if (link === "Collection") {
-            router.push('/Collection');
+        } else if (link === "create") {
+            router.push('/create');
         } else if (link === "FAQ") {
             router.push('/#faq');
         }
@@ -44,9 +44,9 @@ const Header = () => {
                                 Home
                             </span>
                         </Link>
-                        <Link href="/Collection" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
+                        <Link href="/create" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
                             <span className="flex text-center">
-                                Collection
+                                Create_Token
                             </span>
                         </Link>
                         <Link href="/#faq" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
@@ -83,9 +83,9 @@ const Header = () => {
                     </span>
                 </button>
                 <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
-                    onClick={() => { handleNavigate("Collection") }}>
+                    onClick={() => { handleNavigate("create") }}>
                     <span className="flex text-center">
-                        Collection
+                        Create_Token
                     </span>
                 </button>
                 <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"

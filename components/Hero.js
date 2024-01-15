@@ -20,7 +20,7 @@ const Hero = () => {
     const handleNavigate = () => {
         setIsAnimating(true);
         setTimeout(() => {
-            router.push('/Collection');
+            router.push('/create');
         }, 500); // Duration should match the CSS animation
     };
 
