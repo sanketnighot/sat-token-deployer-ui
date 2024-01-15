@@ -4,14 +4,6 @@ import { deployContract, FEE } from '../utils/origination';
 
 const CollectionData = () => {
     const [showToken, setShowToken] = useState(false);
-    const [collectionName, setCollectionName] = useState('');
-    const [collectionAdmin, setCollectionAdmin] = useState('');
-    const [collectionDescription, setCollectionDescription] = useState('');
-    const [tokenName, setTokenName] = useState('');
-    const [tokenSymbol, setTokenSymbol] = useState('');
-    const [tokenSupply, setTokenSupply] = useState('');
-    const [tokenUrl, setTokenUrl] = useState('');
-    const [tokenDescription, setTokenDescription] = useState('');
     const [transactionUrl, setTransactionUrl] = useState('');
     const [showError, setShowError] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
@@ -19,18 +11,24 @@ const CollectionData = () => {
     const [successMessage, setSuccessMessage] = useState("Sucess Message");
     const [isLoading, setIsLoading] = useState(false);
     const [txnMessage, setTxnMessage] = useState(false);
+    const [collectionData, setCollectionData] = useState(
+        {
+            collectionName: '',
+            collectionAdmin: '',
+            collectionDescription: '',
+            tokenName: '',
+            tokenSymbol: '',
+            tokenSupply: '',
+            tokenUrl: '',
+            tokenDescription: ''
+        }
+    )
+
 
     const createCollection = async () => {
         try {
             deployContract(
-                collectionName,
-                collectionAdmin,
-                collectionDescription,
-                tokenName,
-                tokenDescription,
-                tokenSymbol,
-                tokenSupply,
-                tokenUrl,
+                collectionData,
                 setShowSuccess,
                 setTransactionUrl,
                 setIsLoading,
@@ -59,10 +57,10 @@ const CollectionData = () => {
                             className="md:text-left md:mr-4 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
                             required
                             placeholder="Eg. My Token Deeployer"
-                            value={collectionName}
+                            value={collectionData.collectionName}
                             onChange={
                                 (event) => {
-                                    setCollectionName(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, collectionName: event.target.value }))
                                 }
                             }
                         />
@@ -72,11 +70,11 @@ const CollectionData = () => {
                         <input
                             className="md:text-left md:mr-4 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
                             placeholder="Eg. tz1yourTezosWalletAddressHere"
-                            value={collectionAdmin}
+                            value={collectionData.collectionAdmin}
                             required
                             onChange={
                                 (event) => {
-                                    setCollectionAdmin(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, collectionAdmin: event.target.value }))
                                 }
                             }
                         />
@@ -86,11 +84,11 @@ const CollectionData = () => {
                         <textarea
                             className="text-left md:mr-4 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full p-2"
                             placeholder="The Purpose of my SAT Token is ..."
-                            value={collectionDescription}
+                            value={collectionData.collectionDescription}
                             required
                             onChange={
                                 (event) => {
-                                    setCollectionDescription(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, collectionDescription: event.target.value }))
                                 }
                             }
                         />
@@ -117,22 +115,22 @@ const CollectionData = () => {
                         <input
                             className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="My Token Name"
-                            value={tokenName}
+                            value={collectionData.tokenName}
                             required
                             onChange={
                                 (event) => {
-                                    setTokenName(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, tokenName: event.target.value }))
                                 }
                             }
                         />
                         <input
                             className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="My Token Symbol"
-                            value={tokenSymbol}
+                            value={collectionData.tokenSymbol}
                             required
                             onChange={
                                 (event) => {
-                                    setTokenSymbol(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, tokenSymbol: event.target.value }))
                                 }
                             }
                         />
@@ -142,22 +140,22 @@ const CollectionData = () => {
                             type="number"
                             className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="Total tokens I want"
-                            value={tokenSupply}
+                            value={collectionData.tokenSupply}
                             required
                             onChange={
                                 (event) => {
-                                    setTokenSupply(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, tokenSupply: event.target.value }))
                                 }
                             }
                         />
                         <input
                             className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="My token Image URL is"
-                            value={tokenUrl}
+                            value={collectionData.tokenUrl}
                             required
                             onChange={
                                 (event) => {
-                                    setTokenUrl(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, tokenUrl: event.target.value }))
                                 }
                             }
                         />
@@ -167,10 +165,10 @@ const CollectionData = () => {
                             required
                             className="text-left md:mx-2 w-5/6 text-sm md:text-xl font-seven mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full px-2"
                             placeholder="This token will be used as ..."
-                            value={tokenDescription}
+                            value={collectionData.tokenDescription}
                             onChange={
                                 (event) => {
-                                    setTokenDescription(event.target.value)
+                                    setCollectionData((collectionData) => ({ ...collectionData, tokenDescription: event.target.value }))
                                 }
                             }
                         />

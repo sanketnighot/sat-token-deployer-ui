@@ -12,14 +12,7 @@ BigNumber.config({ DECIMAL_PLACES: DECIMAL })
 
 
 export const deployContract = async (
-    collectionName,
-    collectionAdmin,
-    collectionDescription,
-    tokenName,
-    tokenDescription,
-    tokenSymbol,
-    tokenSupply,
-    tokenUrl,
+    collectionData,
     setShowSuccess,
     setTransactionUrl,
     setIsLoading,
@@ -38,8 +31,8 @@ export const deployContract = async (
             contents: Buffer(
                 JSON.stringify({
                     version: "v0.0.1",
-                    name: collectionName,
-                    description: collectionDescription,
+                    name: collectionData.collectionName,
+                    description: collectionData.collectionDescription,
                     authors: ["SAT Token Deployer"],
                     source: {
                         tools: ["Smartpy"],
@@ -53,26 +46,26 @@ export const deployContract = async (
             0: {
                 token_id: 0,
                 token_info: MichelsonMap.fromLiteral({
-                    symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
-                    name: Buffer(tokenName, "ascii").toString("hex"),
+                    symbol: Buffer(collectionData.tokenSymbol, "ascii").toString("hex"),
+                    name: Buffer(collectionData.tokenName, "ascii").toString("hex"),
                     decimals: Buffer(DECIMAL.toString(), "ascii").toString("hex"),
                     shouldPreferSymbol: Buffer("true", "ascii").toString("hex"),
-                    description: Buffer(tokenDescription, "ascii").toString("hex"),
-                    thumbnailUri: Buffer(tokenUrl, "ascii").toString("hex"),
+                    description: Buffer(collectionData.tokenDescription, "ascii").toString("hex"),
+                    thumbnailUri: Buffer(collectionData.tokenUrl, "ascii").toString("hex"),
                 })
             }
         });
         setTxnMessage('Setting up Storage ...');
         let storage = {
-            administrator: collectionAdmin,
+            administrator: collectionData.collectionAdmin,
             last_token_id: 1,
             ledger: MichelsonMap.fromLiteral({}),
             metadata: metadata,
             operators: {},
-            supply: tokenSupply,
+            supply: collectionData.tokenSupply,
             token_metadata: tokenMetadata,
         }
-        storage.ledger.set(collectionAdmin, tokenSupply)
+        storage.ledger.set(collectionData.collectionAdmin, collectionData.tokenSupply)
         setTxnMessage('Waiting for you to sign Transaction ...');
         const tezos = await dappClient().tezos();
         const batch = await tezos.wallet.batch()
