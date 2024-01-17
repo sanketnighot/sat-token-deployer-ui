@@ -6,22 +6,21 @@ import Mask from '../components/Assets/Mask';
 
 const Hero = () => {
     const [isAnimating, setIsAnimating] = useState(true);
-    const [isClient, setIsClient] = useState(false); // New state to track if we're on the client
+    const [isClient, setIsClient] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-        // This code runs only on the client
         setIsClient(true);
         setTimeout(() => {
             setIsAnimating(false);
-        }, 100); // Duration should match the CSS animation
+        }, 100);
     }, []);
 
     const handleNavigate = () => {
         setIsAnimating(true);
         setTimeout(() => {
             router.push('/create');
-        }, 500); // Duration should match the CSS animation
+        }, 500);
     };
 
     return (
