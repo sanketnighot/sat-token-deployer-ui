@@ -1,11 +1,8 @@
 import { dappClient } from './walletconnect';
 import { char2Bytes } from "@taquito/utils";
 import { MichelsonMap } from '@taquito/michelson-encoder';
-import { DEPLOYER_CONTRACT_ADDRESS } from './config';
+import { DEPLOYER_CONTRACT_ADDRESS, FEE, DECIMAL } from './config';
 import axios from 'axios';
-
-const DECIMAL = 6;
-export const FEE = 2
 
 
 export const deployContract = async (
