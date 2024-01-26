@@ -18,8 +18,7 @@ export const deployContract = async (
     try {
         setIsLoading(true);
         setTxnMessage('Connecting Wallet ...');
-        await dappClient().CheckIfWalletConnected()
-        setTxnMessage('Preparing Metadata ...');
+        await dappClient().connectAccount();
         const metadata = MichelsonMap.fromLiteral({
             "": Buffer("tezos-storage:contents", "ascii").toString("hex"),
             contents: Buffer(
@@ -76,7 +75,7 @@ export const deployContract = async (
         await dappClient().disconnectWallet()
         console.log(error);
         setIsLoading(false);
-        setErrorMessage(error.message);
         setShowError(true);
+        setErrorMessage(error.message);
     }
 }

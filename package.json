@@ -14,7 +14,6 @@
     "@taquito/beacon-wallet": "16.2.0",
     "@taquito/taquito": "16.2.0",
     "axios": "^1.6.5",
-    "framer-motion": "^10.18.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"

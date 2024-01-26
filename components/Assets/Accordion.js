@@ -6,7 +6,7 @@ export const AccordionItem = ({ title, children }) => {
     return (
         <div className="mb-4">
             <button
-                className="w-full py-2 px-4 text-white shadow focus:outline-none mx-auto text-center text-sm md:text-xl font-seven border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
+                className="w-full py-2 px-4 focus:outline-none mx-auto text-center text-sm md:text-xl font-seven border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-green-900 hover:bg-[#a2ff00] text-[#a2ff00] hover:text-green-900"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {title}

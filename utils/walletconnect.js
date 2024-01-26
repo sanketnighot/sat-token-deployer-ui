@@ -1,6 +1,5 @@
 import {
     ColorMode,
-    NetworkType,
 } from "@airgap/beacon-sdk";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { NETWORK, RPC } from './config';
@@ -40,7 +39,7 @@ export const dappClient = () => {
         await client.clearActiveAccount();
         return client.requestPermissions({
             network: {
-                type: NetworkType.GHOSTNET,
+                type: NETWORK,
             },
         });
     }
@@ -59,7 +58,7 @@ export const dappClient = () => {
             if (!activeAccount) {
                 await client.requestPermissions({
                     network: {
-                        type: NetworkType.GHOSTNET,
+                        type: NETWORK,
                     },
                 });
             }

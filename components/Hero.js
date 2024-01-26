@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion';
+import React from 'react'
 import { useRouter } from 'next/navigation';
 import Image from "next/image"
-import Mask from '../components/Assets/Mask';
 
 const Hero = () => {
-    const [isAnimating, setIsAnimating] = useState(true);
-    const [isClient, setIsClient] = useState(false);
     const router = useRouter();
 
-    useEffect(() => {
-        setIsClient(true);
-        setTimeout(() => {
-            setIsAnimating(false);
-        }, 100);
-    }, []);
 
     const handleNavigate = () => {
-        setIsAnimating(true);
-        setTimeout(() => {
-            router.push('/create');
-        }, 500);
+        router.push('/create');
     };
 
     return (
@@ -39,17 +26,6 @@ const Hero = () => {
                 />
                 <h2 className="text-md md:text-2xl mb-2">Click coin to create your own collection</h2>
             </div>
-            {isClient && isAnimating && (
-                <motion.div
-                    className="fixed top-0 left-0 z-10 w-full h-full bg-[#1b1b1b] circle-animation"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1.5 }}
-                >
-                    <div><Mask /></div>
-                </motion.div>
-            )}
         </div>
     )
 }

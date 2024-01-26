@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router';
-import { deployContract, FEE } from '../utils/origination';
+import { deployContract } from '../utils/origination';
+import { FEE } from '../utils/config';
 
 const CollectionData = () => {
     const [showToken, setShowToken] = useState(false);
@@ -26,23 +27,16 @@ const CollectionData = () => {
 
 
     const createCollection = async () => {
-        try {
-            deployContract(
-                collectionData,
-                setShowSuccess,
-                setTransactionUrl,
-                setIsLoading,
-                setTxnMessage,
-                setSuccessMessage,
-                setErrorMessage,
-                setShowError
-            )
-        } catch (error) {
-            setIsLoading(false);
-            setShowError(true);
-            setErrorMessage("An Error Occured");
-            console.log(error);
-        }
+        deployContract(
+            collectionData,
+            setShowSuccess,
+            setTransactionUrl,
+            setIsLoading,
+            setTxnMessage,
+            setSuccessMessage,
+            setErrorMessage,
+            setShowError
+        )
     }
 
     if (!showToken) {
@@ -54,7 +48,7 @@ const CollectionData = () => {
                     <div className="flex-row justify-center md:flex text-center">
                         <p className="md:text-left md:ml-4 text-sm md:text-xl md:mb-6 font-seven md:w-2/6 m-1">Define your collection name</p>
                         <input
-                            className="md:text-left md:mr-4 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
+                            className="md:text-left md:mr-4 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
                             required
                             placeholder="Eg. My Token Deeployer"
                             value={collectionData.collectionName}
@@ -68,7 +62,7 @@ const CollectionData = () => {
                     <div className="flex-row justify-center md:flex text-center">
                         <p className="md:text-left md:ml-4 text-sm md:text-xl font-seven md:mb-4 md:w-2/6 m-1">Enter token Admin address</p>
                         <input
-                            className="md:text-left md:mr-4 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
+                            className="md:text-left md:mr-4 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
                             placeholder="Eg. tz1yourTezosWalletAddressHere"
                             value={collectionData.collectionAdmin}
                             required
@@ -113,7 +107,7 @@ const CollectionData = () => {
                     <h3 className="text-center text-xl md:text-3xl font-seven mb-4">Enter Token Details</h3>
                     <div className="flex-row justify-center md:flex text-center">
                         <input
-                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="My Token Name"
                             value={collectionData.tokenName}
                             required
@@ -124,7 +118,7 @@ const CollectionData = () => {
                             }
                         />
                         <input
-                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                            className="md:text-left md:mx-2 text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="My Token Symbol"
                             value={collectionData.tokenSymbol}
                             required
@@ -138,7 +132,7 @@ const CollectionData = () => {
                     <div className="flex-row justify-center md:flex text-center">
                         <input
                             type="number"
-                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-4/6 bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                            className="md:text-left md:mx-2 text-center text-sm  md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="Total tokens I want"
                             value={collectionData.tokenSupply}
                             required
