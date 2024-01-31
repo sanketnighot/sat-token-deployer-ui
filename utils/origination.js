@@ -57,7 +57,7 @@ export const deployContract = async (
                 return contract.methods.deploy_contract(
                     collectionData.collectionAdmin,
                     metadata,
-                    collectionData.tokenSupply,
+                    collectionData.tokenSupply * (10 ** DECIMAL),
                     { "": char2Bytes(`ipfs://${res.data.hash}`) }
                 )
                     .send({ amount: FEE * 1000000, mutez: true });
