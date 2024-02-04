@@ -26,7 +26,7 @@ export const deployContract = async (
                     version: "v0.0.1",
                     name: collectionData.collectionName,
                     description: collectionData.collectionDescription,
-                    authors: ["SAT Token Deployer"],
+                    authors: ["Deeployer < https://x.com/tzdeeployer >"],
                     source: {
                         tools: ["Smartpy"],
                     },
@@ -38,7 +38,7 @@ export const deployContract = async (
         const tokenMetadata = {
             symbol: collectionData.tokenSymbol,
             name: collectionData.tokenName,
-            decimals: DECIMAL.toString(),
+            decimals: DECIMAL,
             shouldPreferSymbol: "true",
             description: collectionData.tokenDescription,
             thumbnailUri: collectionData.tokenUrl
@@ -69,7 +69,7 @@ export const deployContract = async (
         setTxnMessage();
         setShowSuccess(true);
         setSuccessMessage('Contract deployed successfully!');
-        setTransactionUrl(`https://ghostnet.tzkt.io/${transaction.opHash}`);
+        setTransactionUrl(`https://tzkt.io/${transaction.opHash}`);
 
     } catch (error) {
         await dappClient().disconnectWallet()

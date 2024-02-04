@@ -12,6 +12,11 @@
   src: url('./SevenSegment.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'monocode';
+  src: url('./monocode.ttf') format('truetype');
+}
+
 :root {
   --color-background: #1b1b1b; /* Replace with the background color from your theme */
   --color-text: #a2ff00; /* Replace with the text color from your theme */

@@ -25,7 +25,7 @@ const AccordionComp = () => {
                     <p className="text-sm md:text-lg font-seven my-4 px-2">Token decimals refer to the unit used for displaying the token amount to users. It determines the maximum number of places after the dot in the token's amount representation. For instance, if SATs have 2 decimals, the smallest amount that can be represented is 0.01 SATs.</p>
                 </AccordionItem>
                 <AccordionItem title="How can I link an image with a URL for my FA2 token ?">
-                    <p className="text-sm md:text-lg font-seven my-4 px-2">To link an image with a URL, consider uploading the image to a storage service or IPFS. Once uploaded, use the URL of the image when updating the token contract information. This ensures that the image associated with your FA2 token is accessible and visible.</p>
+                    <p className="text-sm md:text-lg font-seven my-4 px-2">To link an image with a URL, consider uploading the image to a storage service or IPFS [ Best opiton would be Pinata ]. Once uploaded, use the URL of the image when updating the token contract information. This ensures that the image associated with your FA2 token is accessible and visible.</p>
                 </AccordionItem>
                 <AccordionItem title="How do I update contract and token information on TZKT profiles ?">
                     <div className="text-sm md:text-lg font-seven my-4 px-2">

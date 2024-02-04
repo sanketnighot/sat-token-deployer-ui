@@ -14,7 +14,8 @@ module.exports = {
             },
             fontFamily: {
                 'seven': ['SevenSegmentFont', 'sans-serif'],
-                'computer': ['ComputerFont', 'sans-serif']
+                'computer': ['ComputerFont', 'sans-serif'],
+                'monocode': ['monocode', 'sans-serif']
             },
         },
     },
