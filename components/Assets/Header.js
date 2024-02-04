@@ -56,7 +56,7 @@ const Header = () => {
                         </span>
                     </Link>
                     <div className="group">
-                        <button className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900" disabled>
+                        <button className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
                             <span className="flex text-center">
                                 Features[Soon]
                             </span>
@@ -65,11 +65,11 @@ const Header = () => {
                             <div className="absolute mt-2 mr-10 rounded-md shadow-lg bg-transparent ring-1 ring-black ring-opacity-5 focus:outline-none opacity-0 group-hover:opacity-100 transition duration-200 ease-in-out">
                                 <div className="mt-5" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                     <Link href="#" className="font-semibold transition duration-300 w-full hover:cursor-not-allowed">
-                                        <span className="px-2 flex text-center  ">
+                                        <span className="px-2 flex text-center">
                                             Draw_2_Mint
                                         </span>
                                     </Link> <br />
-                                    <Link href="#" className="font-semibold transition duration-300 hover:cursor-not-allowed w-full ">
+                                    <Link href="#" className="font-semibold transition duration-300 hover:cursor-not-allowed w-full">
                                         <span className="px-2 flex text-center">
                                             Airdrop_Deployer
                                         </span>
