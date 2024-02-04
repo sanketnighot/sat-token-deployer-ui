@@ -13,13 +13,17 @@ module.exports = {
                     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
             },
             fontFamily: {
-                'seven': ['SevenSegmentFont', 'sans-serif'],
                 'computer': ['ComputerFont', 'sans-serif'],
                 'monocode': ['monocode', 'sans-serif']
             },
         },
     },
     plugins: [],
+    variants: {
+        extend: {
+            display: ['group-hover'],
+        },
+    },
     mode: 'jit',
     purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
 }

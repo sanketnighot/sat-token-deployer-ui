@@ -6,8 +6,8 @@ const Hero = () => {
         <div className="min-h-screen flex items-center justify-center">
             <div className="text-center">
                 <h1 className="text-2xl md:text-6xl mb-2">Social Appreciation Tokens</h1>
-                <h2 className="text-lg md:text-4xl mb-2">{'<'} For the great Artists of Tezos {'>'}</h2>
-                <p className="text-md md:text-3xl font-seven mb-2">SATs stands for Social Appreciation Tokens, a revolutionary tokenization system on the Tezos blockchain that transforms the relationship between artists and their collectors. SAT's operate on the principle of decentralized promotion and ownership, creating a symbiotic ecosystem that benefits both artists and token holders.</p>
+                <h2 className="text-lg md:text-4xl mb-8">{'<'} For the great Artists of Tezos {'>'}</h2>
+                <p className="text-md md:text-2xl font-monocode mb-2">SATs stands for Social Appreciation Tokens, a revolutionary tokenization system on the Tezos blockchain that transforms the relationship between artists and their collectors. SAT's operate on the principle of decentralized promotion and ownership, creating a symbiotic ecosystem that benefits both artists and token holders.</p>
                 <Link href="/create">
                     <img
                         className="cursor-pointer mx-auto"
@@ -18,7 +18,7 @@ const Hero = () => {
                     />
                 </Link>
 
-                <h2 className="text-md md:text-2xl mb-2">Click coin to create your own collection</h2>
+                <h2 className="text-md md:text-3xl mb-2">Click coin to create your own collection</h2>
             </div>
         </div>
     )

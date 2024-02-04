@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { deployContract } from '../utils/origination';
 import { FEE } from '../utils/config';
@@ -25,6 +25,22 @@ const CollectionData = () => {
         }
     )
 
+    const inputRef = useRef(null);
+    const tokenNameInputRef = useRef(null);
+    const tokenSymbolInputRef = useRef(null);
+
+    useEffect(() => {
+        if (showToken) {
+            if (tokenNameInputRef.current) {
+                tokenNameInputRef.current.focus();
+            }
+        } else {
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
+        }
+    }, [showToken]);
+
 
     const createCollection = async () => {
         deployContract(
@@ -46,8 +62,9 @@ const CollectionData = () => {
                     onSubmit={(e) => { e.preventDefault(); setShowToken(true) }}>
                     <h3 className="text-center text-2xl md:text-4xl mb-2 text-[#26fb26]">Create your own SAT</h3>
                     <div className="flex-row justify-center md:flex text-center">
-                        <p className="md:text-left md:ml-4 text-sm md:text-xl md:mb-6 font-seven md:w-2/6 m-1">Define your collection name</p>
+                        <p className="md:text-left md:ml-4 text-sm md:text-xl md:mb-6 font-monocode md:w-2/6 m-1">Enter collection name</p>
                         <input
+                            ref={inputRef}
                             className="md:text-left md:mr-4 text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
                             required
                             placeholder="Eg. My Token Deeployer"
@@ -60,7 +77,7 @@ const CollectionData = () => {
                         />
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
-                        <p className="md:text-left md:ml-4 text-sm md:text-xl font-seven md:mb-4 md:w-2/6 m-1">Enter token Admin address</p>
+                        <p className="md:text-left md:ml-4 text-sm md:text-xl font-monocode md:mb-4 md:w-2/6 m-1">Enter token Admin address</p>
                         <input
                             className="md:text-left md:mr-4 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full px-2"
                             placeholder="Eg. tz1yourTezosWalletAddressHere"
@@ -74,7 +91,7 @@ const CollectionData = () => {
                         />
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
-                        <p className="md:text-left md:ml-4 text-sm md:text-xl font-seven md:mb-4 md:w-2/6 m-1">Describe your token in few words</p>
+                        <p className="md:text-left md:ml-4 text-sm md:text-xl font-monocode md:mb-4 md:w-2/6 m-1">Describe your token in few words</p>
                         <textarea
                             className="text-left md:mr-4 text-sm md:text-lg font-monocode mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-4/6 md:w-full p-2"
                             placeholder="The Purpose of my SAT Token is ..."
@@ -88,7 +105,7 @@ const CollectionData = () => {
                         />
                     </div>
                     <div className="flex align-center">
-                        <button className="mx-auto text-center text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-40 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900">
+                        <button className="mx-auto text-center text-sm md:text-xl font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-40 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900">
                             Next
                         </button>
                     </div>
@@ -104,9 +121,11 @@ const CollectionData = () => {
                         setShowToken(true)
                         await createCollection();
                     }}>
-                    <h3 className="text-center text-xl md:text-3xl font-seven mb-4">Enter Token Details</h3>
+                    <h3 className="text-center text-xl md:text-3xl font-monocode mb-4">Enter Token Details</h3>
                     <div className="flex-row justify-center md:flex text-center">
                         <input
+                            ref={tokenNameInputRef}
+
                             className="md:text-left md:mx-2 text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
                             placeholder="My Token Name"
                             value={collectionData.tokenName}
@@ -168,16 +187,16 @@ const CollectionData = () => {
                         />
                     </div>
                     <div className="flex-row md:flex my-2 mx-4 ">
-                        <h3 className="text-xl font-seven ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3>
+                        <h3 className="text-xl font-monocode ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3>
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
                         <button
-                            className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
+                            className="text-sm md:text-xl font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
                             onClick={() => { setShowToken(false) }}>
                             Previous
                         </button>
                         <button
-                            className="text-sm md:text-xl font-seven mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
+                            className="text-sm md:text-xl font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-5/6 mx-auto md:mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
                         >
                             Create SAT Token
                         </button>
@@ -214,11 +233,11 @@ const Popup = ({ title, message, onClose, bgColor, textColor, url }) => {
     return (
         <div className="relative bg-gray-900 rounded-sm shadow-lg p-6 w-full max-w-md mx-auto border-2 border-[#39FF14] ring-2 ring-${bgColor}">
             <h3 className={`text-5xl font-semibold ${textColor}`}>{title}</h3>
-            <p className="mt-4 text-2xl text-gray-300">{message}</p>
+            <p className="mt-4 text-xl text-gray-300 font-monocode">{message}</p>
             <div className="mt-6 flex justify-end space-x-2">
 
                 <button
-                    className={`text-sm md:text-xl font-seven border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-full w-full mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900`}
+                    className={`text-sm md:text-xl font-monocode border-2 border-green-300 ring-2 ring-green-700 shadow-lg md:w-full w-full mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900`}
                     onClick={handleClick}>
                     {url ? "Open Transaction" : "Close"}
                 </button>

@@ -8,11 +8,6 @@
 }
 
 @font-face {
-  font-family: 'SevenSegmentFont';
-  src: url('./SevenSegment.ttf') format('truetype');
-}
-
-@font-face {
   font-family: 'monocode';
   src: url('./monocode.ttf') format('truetype');
 }
