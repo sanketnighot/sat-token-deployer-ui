@@ -9,7 +9,7 @@ export default function Home() {
             <Head>
                 <title>SATs Token Deployer</title>
                 <meta property="og:title" content="SAT Token Deployer" />
-                <meta property="og:description" content="Special Appreciation Token for Tezos Artist" />
+                <meta property="og:description" content="Social Appreciation Token for Tezos Artist" />
                 <meta property="og:site_name" content="SAT Token Deployer" />
             </Head>
             <div className="flex flex-wrap justify-center items-center">
