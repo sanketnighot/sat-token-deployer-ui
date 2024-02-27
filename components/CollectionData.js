@@ -187,7 +187,7 @@ const CollectionData = () => {
                         />
                     </div>
                     <div className="flex-row md:flex my-2 mx-4 ">
-                        <h3 className="text-xl font-monocode ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3>
+                        {/* <h3 className="text-xl font-monocode ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3> */}
                     </div>
                     <div className="flex-row justify-center md:flex text-center">
                         <button

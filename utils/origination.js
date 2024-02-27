@@ -65,7 +65,7 @@ export const deployContract = async (
         setTxnMessage('Waiting for you to sign Transaction ...');
         const tezos = await dappClient().tezos();
         const batch = await tezos.wallet.batch()
-            .withTransfer({ to: FEE_RECIPIENT, amount: FEE })
+            // .withTransfer({ to: FEE_RECIPIENT, amount: FEE })
             .withOrigination({
                 code: contractCode,
                 storage: storage,
@@ -78,7 +78,7 @@ export const deployContract = async (
         setTxnMessage();
         setShowSuccess(true);
         setSuccessMessage('Contract deployed successfully!');
-        setTransactionUrl(`https://ghostnet.tzkt.io/${batch.opHash}`);
+        setTransactionUrl(`https://tzkt.io/${batch.opHash}`);
 
     } catch (error) {
         await dappClient().disconnectWallet()
