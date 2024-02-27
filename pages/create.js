@@ -11,6 +11,8 @@ const Create = () => {
                 <meta property="og:title" content="SAT Token Deployer" />
                 <meta property="og:description" content="Special Appreciation Token for Tezos Artist" />
                 <meta property="og:site_name" content="SAT Token Deployer" />
+                <meta property="og:image" content={logo1} />
+                <meta property="og:url" content="https://deeployer.xyz" />
             </Head>
             <div className="md:h-[45rem] flex items-center justify-center text-[#00ff00]">
                 <div className="container w-5/6 md:w-3/6">

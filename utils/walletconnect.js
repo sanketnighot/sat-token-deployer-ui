@@ -13,7 +13,7 @@ export const dappClient = () => {
             iconUrl: "/logo1.png",
             preferredNetwork: NETWORK,
             colorMode: ColorMode.DARK,
-            appUrl: "https://example.com",
+            appUrl: "https://deeployer.xyz",
             featuredWallets: ['temple', 'naan', 'kukai', 'trust'],
         };
 
