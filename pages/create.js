@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import CollectionData from '../components/CollectionData';
+import logo1 from '../public/logo1.png';
 
 const Create = () => {
 
