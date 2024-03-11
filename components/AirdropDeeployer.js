@@ -19,7 +19,7 @@ const AirdropDeeployer = ({ }) => {
     const [txnMessage, setTxnMessage] = useState(false);
 
     useEffect(() => {
-        if (csv_file) {
+        if (csv_file && csv_file.name.endsWith('.csv')) {
             convertCsvToJson(csv_file)
                 .then((data) => {
                     setJsonData(data);
@@ -27,6 +27,10 @@ const AirdropDeeployer = ({ }) => {
                 .catch((err) => {
                     console.log(err);
                 });
+        } else {
+            setCsvFile();
+            setIsFileUploaded(false);
+            setJsonData([]);
         }
     }, [csv_file]);
 
