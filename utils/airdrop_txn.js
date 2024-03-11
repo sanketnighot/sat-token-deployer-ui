@@ -39,9 +39,8 @@ export const sendAirdrop = async (
                 ])
             );
         }
-
-        const batchOperation = await batch.send();
         setTxnMessage('Airdropping your Tokens ...');
+        const batchOperation = await batch.send();
         await batchOperation.confirmation();
         await dappClient().disconnectWallet()
         setIsLoading(false);
