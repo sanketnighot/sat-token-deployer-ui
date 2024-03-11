@@ -287,7 +287,7 @@ const LoaderPopup = ({ isLoading, setIsLoading, txnMessage }) => {
         isLoading && (
             <PopupContainer>
                 <Popup
-                    title="Loading"
+                    title="Loading ..."
                     message={txnMessage}
                     onClose={() => { setIsLoading(false) }}
                     bgColor="blue"

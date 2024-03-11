@@ -16,6 +16,8 @@ const Header = () => {
             router.push('/create');
         } else if (link === "FAQ") {
             router.push('/#faq');
+        } else if (link === "airdrop") {
+            router.push('/airdrop');
         }
     };
 
@@ -50,6 +52,11 @@ const Header = () => {
                             Create_Token
                         </span>
                     </Link>
+                    <Link href="/airdrop" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
+                        <span className="flex text-center">
+                            Airdrop_Tokens
+                        </span>
+                    </Link>
                     <Link href="/#faq" className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900">
                         <span className="flex text-center">
                             FAQ
@@ -67,11 +74,6 @@ const Header = () => {
                                     <Link href="#" className="font-semibold transition duration-300 w-full hover:cursor-not-allowed">
                                         <span className="px-2 flex text-center">
                                             Draw_2_Mint
-                                        </span>
-                                    </Link> <br />
-                                    <Link href="#" className="font-semibold transition duration-300 hover:cursor-not-allowed w-full">
-                                        <span className="px-2 flex text-center">
-                                            Airdrop_Deployer
                                         </span>
                                     </Link>
                                 </div>
@@ -111,6 +113,11 @@ const Header = () => {
                         Create_Token
                     </span>
                 </button>
+                <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900" onClick={() => { handleNavigate("airdrop") }}>
+                    <span className="flex text-center">
+                        Airdrop_Tokens
+                    </span>
+                </button>
                 <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
                     onClick={() => { handleNavigate("FAQ") }}>
                     <span className="flex text-center">
@@ -120,11 +127,6 @@ const Header = () => {
                 <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900">
                     <span className="flex text-center">
                         Draw2Mint_[Soon]
-                    </span>
-                </button>
-                <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900">
-                    <span className="flex text-center">
-                        Airdrop_Deployer_[Soon]
                     </span>
                 </button>
             </div>
