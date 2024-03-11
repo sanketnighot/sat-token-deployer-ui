@@ -5,7 +5,8 @@ export const convertCsvToJson = (file) => {
         Papa.parse(file, {
             header: true,
             complete: (results) => {
-                resolve(results.data);
+                const filteredData = results.data.filter(row => Object.values(row).some(value => value !== ''));
+                resolve(filteredData);
             },
             error: (err) => {
                 reject(err);
