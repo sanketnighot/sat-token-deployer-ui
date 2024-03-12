@@ -12,7 +12,7 @@ export default function Home() {
                 <meta property="og:title" content="SAT Token Deployer" />
                 <meta property="og:description" content="Social Appreciation Token for Tezos Artist" />
                 <meta property="og:site_name" content="SAT Token Deployer" />
-                <meta property="og:image" content={"/public/logo1.png"} />
+                <meta property="og:image" content={"/logo1.png"} />
                 <meta property="og:url" content="https://deeployer.xyz" />
             </Head>
             <div className="flex flex-wrap justify-center items-center">
