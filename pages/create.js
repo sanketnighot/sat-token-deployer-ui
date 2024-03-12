@@ -10,7 +10,7 @@ const Create = () => {
             <Head>
                 <title>Create Token | SATs Token Deployer</title>
                 <meta property="og:title" content="Create Token | SAT Token Deployer" />
-                <meta property="og:description" content="Special Appreciation Token for Tezos Artist" />
+                <meta property="og:description" content="Social Appreciation Token for Tezos Artist" />
                 <meta property="og:site_name" content="Create Token | SAT Token Deployer" />
                 <meta property="og:image" content={logo1} />
                 <meta property="og:url" content="https://deeployer.xyz" />
