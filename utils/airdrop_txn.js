@@ -22,7 +22,10 @@ export const sendAirdrop = async (
         const tezos = await dappClient().tezos();
         const batch = tezos.wallet.batch();
         batch.withTransfer({ to: FEE_RECIPIENT, amount: FEE });
+        let counter = 0;
         for (const data of jsonData) {
+            console.log("Working: ", `${counter} out of ${jsonData.length}` , (counter/jsonData.length)*100, "%")
+            setTxnMessage(`Preparing Airdrop [${counter}/${jsonData.length}] ${((counter/jsonData.length)*100).toPrecision(3)}%`);
             const tokenContract = await tezos.wallet.at(data["Contract Address"]);
             batch.withContractCall(
                 tokenContract.methods.transfer([
@@ -38,6 +41,7 @@ export const sendAirdrop = async (
                     },
                 ])
             );
+            counter++;
         }
         setTxnMessage('Please Sign the Transaction ...');
         const batchOperation = await batch.send();
