@@ -5,6 +5,7 @@ import { convertCsvToJson } from "../utils/helpers";
 import DataTable from "./Assets/DataTable";
 import { sendAirdrop } from "../utils/airdrop_txn";
 import { FEE } from "../utils/config";
+import CopyPasteData from "./Assets/CopyPasteData";
 
 const AirdropDeeployer = ({ }) => {
     const [csv_file, setCsvFile] = useState();
@@ -17,6 +18,7 @@ const AirdropDeeployer = ({ }) => {
     const [successMessage, setSuccessMessage] = useState("Sucess Message");
     const [isLoading, setIsLoading] = useState(false);
     const [txnMessage, setTxnMessage] = useState(false);
+    const [showCopyPaste, setShowCopyPaste] = useState(false);
 
     useEffect(() => {
         if (csv_file && csv_file.name.endsWith('.csv')) {
@@ -84,8 +86,8 @@ const AirdropDeeployer = ({ }) => {
                         </button>
                     </div>
                 </>
-            ) : (
-                <>
+            ) :
+                (!showCopyPaste) ? <>
                     <div className="flex-row justify-center md:flex text-center">
                         <FileUpload
                             csv_file={csv_file}
@@ -103,8 +105,37 @@ const AirdropDeeployer = ({ }) => {
                         </a>
                         <h3 className="text-md md:text-xl font-monocode ml-auto">Transaction Fees: {`${FEE}`} TEZ</h3>
                     </div>
+                    <div className="flex-row justify-center md:flex text-center text-xl font-mono">
+                        OR
+                    </div>
+                    <div className="flex-row md:flex my-2 mx-4 text-center justify-center items-center">
+                        <button
+                            className="text-sm md:text-xl font-monocode my-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-auto mx-auto md:mx-2 px-10 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
+                            onClick={() => setShowCopyPaste(true)}
+                        >
+                            Enter Data Manually
+                        </button>
+                    </div>
                 </>
-            )}
+                    :
+                    <>
+                        <div className="flex-row justify-center md:flex text-center">
+                            <CopyPasteData />
+                        </div>
+                        <div className="flex-row justify-center md:flex text-center text-xl font-mono">
+                            OR
+                        </div>
+                        <div className="flex-row md:flex mx-6 my-2 text-center justify-center items-center">
+                            <button
+                                className="text-sm md:text-xl font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg w-auto mx-auto md:mx-2 px-10 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
+                                onClick={() => setShowCopyPaste(false)}
+                            >
+                                Upload CSV File
+                            </button>
+                        </div>
+                    </>
+            }
+
             <SuccessPopup
                 showSuccess={showSuccess}
                 setShowSuccess={setShowSuccess}
