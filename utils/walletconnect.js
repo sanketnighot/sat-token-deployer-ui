@@ -1,124 +1,122 @@
-import {
-    ColorMode,
-} from "@airgap/beacon-sdk";
-import { BeaconWallet } from "@taquito/beacon-wallet";
-import { NETWORK, RPC } from './config';
+import { ColorMode } from "@airgap/beacon-sdk"
+import { BeaconWallet } from "@taquito/beacon-wallet"
+import { NETWORK, RPC } from "./config"
 
 export const dappClient = () => {
-    let instance;
+  let instance
 
-    async function init() {
-        const dAppInfo = {
-            name: "SAT Token Deployer",
-            iconUrl: "/logo1.png",
-            preferredNetwork: NETWORK,
-            colorMode: ColorMode.DARK,
-            appUrl: "https://deeployer.xyz",
-            featuredWallets: ['temple', 'naan', 'kukai', 'trust'],
-        };
-
-        return new BeaconWallet(dAppInfo);
-    }
-    async function loadWallet() {
-        if (!instance) instance = await init();
-        return instance;
+  async function init() {
+    const dAppInfo = {
+      name: "SAT Token Deployer",
+      iconUrl: "/logo1.png",
+      preferredNetwork: NETWORK,
+      colorMode: ColorMode.DARK,
+      appUrl: "https://deeployer.xyz",
+      featuredWallets: ["temple", "naan", "kukai", "trust"],
     }
 
-    async function getDAppClient() {
-        const wallet = await loadWallet();
-        return wallet.client;
-    }
-    async function getDAppClientWallet() {
-        const wallet = await loadWallet();
-        return wallet;
-    }
+    return new BeaconWallet(dAppInfo)
+  }
+  async function loadWallet() {
+    if (!instance) instance = await init()
+    return instance
+  }
 
-    async function connectAccount() {
-        const client = await getDAppClient();
+  async function getDAppClient() {
+    const wallet = await loadWallet()
+    return wallet.client
+  }
+  async function getDAppClientWallet() {
+    const wallet = await loadWallet()
+    return wallet
+  }
 
-        await client.clearActiveAccount();
-        return client.requestPermissions({
-            network: {
-                type: NETWORK,
-            },
-        });
-    }
+  async function connectAccount() {
+    const client = await getDAppClient()
 
-    async function swapAccount(AccountInfo) {
-        const client = await getDAppClient();
+    await client.clearActiveAccount()
+    return client.requestPermissions({
+      network: {
+        type: NETWORK,
+      },
+    })
+  }
 
-        await client.clearActiveAccount();
-        await client.setActiveAccount(account);
-        return account;
-    }
-    async function CheckIfWalletConnected() {
-        try {
-            const client = await getDAppClient();
-            const activeAccount = await client.getActiveAccount();
-            if (!activeAccount) {
-                await client.requestPermissions({
-                    network: {
-                        type: NETWORK,
-                    },
-                });
-            }
-            return {
-                success: true,
-            };
-        } catch (error) {
-            return {
-                success: false,
-                error,
-            };
-        }
-    }
+  async function swapAccount(AccountInfo) {
+    const client = await getDAppClient()
 
-    async function getAccount() {
-        try {
-            const client = await getDAppClient();
-            const activeAccount = await client.getActiveAccount();
-            return {
-                success: true,
-                account: activeAccount
-            };
-        } catch (error) {
-            return {
-                success: false,
-                error,
-            };
-        }
+    await client.clearActiveAccount()
+    await client.setActiveAccount(account)
+    return account
+  }
+  async function CheckIfWalletConnected() {
+    try {
+      const client = await getDAppClient()
+      const activeAccount = await client.getActiveAccount()
+      if (!activeAccount) {
+        await client.requestPermissions({
+          network: {
+            type: NETWORK,
+          },
+        })
+      }
+      return {
+        success: true,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error,
+      }
     }
+  }
 
-    async function tezos() {
-        const { TezosToolkit } = await import("@taquito/taquito");
-        const Tezos = new TezosToolkit(RPC);
-        const wallet = await getDAppClientWallet();
-        if (wallet) Tezos.setWalletProvider(wallet);
-        return Tezos;
+  async function getAccount() {
+    try {
+      const client = await getDAppClient()
+      const activeAccount = await client.getActiveAccount()
+      return {
+        success: true,
+        account: activeAccount,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error,
+      }
     }
-    async function disconnectWallet() {
-        const wallet = await getDAppClient();
-        try {
-            await wallet.disconnect();
-            return {
-                success: true,
-                wallet: null,
-            };
-        } catch (error) {
-            return {
-                success: false,
-                wallet: null,
-                error,
-            };
-        }
+  }
+
+  async function tezos() {
+    const { TezosToolkit } = await import("@taquito/taquito")
+    const Tezos = new TezosToolkit(RPC)
+    const wallet = await getDAppClientWallet()
+    if (wallet) Tezos.setWalletProvider(wallet)
+    return Tezos
+  }
+  async function disconnectWallet() {
+    const wallet = await getDAppClient()
+    try {
+      await wallet.disconnect()
+      return {
+        success: true,
+        wallet: null,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        wallet: null,
+        error,
+      }
     }
-    return {
-        getDAppClient,
-        connectAccount,
-        swapAccount,
-        CheckIfWalletConnected,
-        tezos,
-        disconnectWallet,
-        getAccount
-    };
+  }
+  return {
+    getDAppClient,
+    connectAccount,
+    swapAccount,
+    CheckIfWalletConnected,
+    tezos,
+    disconnectWallet,
+    getAccount,
+  }
 }

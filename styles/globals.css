@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'ComputerFont';
-  src: url('./Computerfont.ttf') format('truetype');
+  font-family: "ComputerFont";
+  src: url("./Computerfont.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'monocode';
-  src: url('./monocode.ttf') format('truetype');
+  font-family: "monocode";
+  src: url("./monocode.ttf") format("truetype");
 }
 
 :root {
@@ -19,7 +19,7 @@
 }
 
 html {
-  font-family: 'ComputerFont', sans-serif;
+  font-family: "ComputerFont", sans-serif;
 }
 
 body {
@@ -56,7 +56,7 @@ p {
 }
 
 .circle-animation {
-  animation: circleReveal 3.0s ease forwards;
+  animation: circleReveal 3s ease forwards;
 }
 
 @keyframes circleReveal {
