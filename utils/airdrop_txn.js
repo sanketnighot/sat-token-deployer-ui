@@ -6,6 +6,9 @@ BigNumber.config({ DECIMAL_PLACES: DECIMAL })
 
 export const sendAirdrop = async (
   jsonData,
+  contractAddress,
+  tokenId,
+  amount,
   setTransactionUrl,
   setIsLoading,
   setTxnMessage,
@@ -18,38 +21,29 @@ export const sendAirdrop = async (
     setIsLoading(true)
     setTxnMessage("Connecting Wallet ...")
     await dappClient().CheckIfWalletConnected()
+    const account = await (await dappClient().getAccount()).account.address
     setTxnMessage("Preparing Airdrop ...")
     const tezos = await dappClient().tezos()
     const batch = tezos.wallet.batch()
     batch.withTransfer({ to: FEE_RECIPIENT, amount: FEE })
-    let counter = 0
-    for (const data of jsonData) {
-      console.log(
-        "Working: ",
-        `${counter} out of ${jsonData.length}`,
-        (counter / jsonData.length) * 100,
-        "%"
-      )
-      setTxnMessage(
-        `Preparing Airdrop [${counter}/${jsonData.length}] ${((counter / jsonData.length) * 100).toPrecision(3)}%`
-      )
-      const tokenContract = await tezos.wallet.at(data["Contract Address"])
-      batch.withContractCall(
-        tokenContract.methods.transfer([
-          {
-            from_: data["Sender Address"],
-            txs: [
-              {
-                to_: data["Recepient Address"],
-                token_id: Number(data["Token ID"]),
-                amount: Number(data["Amount"]),
-              },
-            ],
-          },
-        ])
-      )
-      counter++
-    }
+    let transferData = []
+    jsonData.map(async (data) => {
+      transferData.push({
+        to_: data,
+        token_id: Number(tokenId),
+        amount: Number(amount),
+      })
+    })
+    const tokenContract = await tezos.wallet.at(contractAddress)
+
+    batch.withContractCall(
+      tokenContract.methods.transfer([
+        {
+          from_: account,
+          txs: transferData,
+        },
+      ])
+    )
     setTxnMessage("Please Sign the Transaction ...")
     const batchOperation = await batch.send()
     setTxnMessage("Airdropping your Tokens ...")
@@ -69,36 +63,18 @@ export const sendAirdrop = async (
   }
 }
 
-const createJsonData = (
-  senderAddress,
-  contractAddress,
-  tokenId,
-  amount,
-  recepientAddress
-) => {
-  // Split the recepientAddress string into an array of addresses
+const createJsonData = (recepientAddress) => {
   const recepientAddresses = recepientAddress
     .split(",")
     .map((address) => address.trim())
 
-  // Initialize an empty array to hold the list of objects
-  const jsonDataList = []
+  const addressList = []
 
-  // Loop through each recepient address
   recepientAddresses.forEach((address) => {
-    // Create a new object for each address
-    const jsonData = {
-      "Sender Address": senderAddress,
-      "Contract Address": contractAddress,
-      "Token ID": tokenId,
-      "Recepient Address": address,
-      Amount: amount,
-    }
-
-    // Add the object to the list
-    jsonDataList.push(jsonData)
+    addressList.push(address)
   })
-  return jsonDataList
+
+  return addressList
 }
 
 export const sendAirdropCopyPaste = async (
@@ -114,59 +90,18 @@ export const sendAirdropCopyPaste = async (
   setShowError,
   setShowSuccess
 ) => {
-  try {
-    setIsLoading(true)
-    setTxnMessage("Connecting Wallet ...")
-    await dappClient().CheckIfWalletConnected()
-    setTxnMessage("Preparing Airdrop ...")
-    const senderAddress = (await dappClient().getAccount()).account.address
-    const jsonData = await createJsonData(
-      senderAddress,
-      contractAddress,
-      tokenId,
-      amount,
-      recepientAddress
-    )
-    const tezos = await dappClient().tezos()
-    const batch = tezos.wallet.batch()
-    // batch.withTransfer({ to: FEE_RECIPIENT, amount: FEE });
-    let counter = 0
-    for (const data of jsonData) {
-      setTxnMessage(
-        `Preparing Airdrop [${counter}/${jsonData.length}] ${((counter / jsonData.length) * 100).toPrecision(3)}%`
-      )
-      const tokenContract = await tezos.wallet.at(data["Contract Address"])
-      batch.withContractCall(
-        tokenContract.methods.transfer([
-          {
-            from_: data["Sender Address"],
-            txs: [
-              {
-                to_: data["Recepient Address"],
-                token_id: Number(data["Token ID"]),
-                amount: Number(data["Amount"]),
-              },
-            ],
-          },
-        ])
-      )
-      counter++
-    }
-    setTxnMessage("Please Sign the Transaction ...")
-    const batchOperation = await batch.send()
-    setTxnMessage("Airdropping your Tokens ...")
-    await batchOperation.confirmation()
-    await dappClient().disconnectWallet()
-    setIsLoading(false)
-    setTxnMessage()
-    setShowSuccess(true)
-    setSuccessMessage("Tokens Airdropped successfully!")
-    setTransactionUrl(`${EXPLORER}/${batchOperation.opHash}`)
-  } catch (error) {
-    await dappClient().disconnectWallet()
-    console.log(error)
-    setIsLoading(false)
-    setErrorMessage(error.message)
-    setShowError(true)
-  }
+  const jsonData = await createJsonData(recepientAddress)
+  await sendAirdrop(
+    jsonData,
+    contractAddress,
+    tokenId,
+    amount,
+    setTransactionUrl,
+    setIsLoading,
+    setTxnMessage,
+    setSuccessMessage,
+    setErrorMessage,
+    setShowError,
+    setShowSuccess
+  )
 }

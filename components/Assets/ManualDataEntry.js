@@ -3,7 +3,7 @@ import { sendAirdropCopyPaste } from "../../utils/airdrop_txn"
 import { useRouter } from "next/router"
 import { FEE } from "../../utils/config"
 
-const CopyPasteData = () => {
+const ManualDataEntry = () => {
   const [contractAddress, setContractAddress] = useState()
   const [tokenId, setTokenId] = useState()
   const [amount, setAmount] = useState()
@@ -119,7 +119,7 @@ const CopyPasteData = () => {
   )
 }
 
-export default CopyPasteData
+export default ManualDataEntry
 
 const PopupContainer = ({ children, onOutsideClick }) => (
   <div

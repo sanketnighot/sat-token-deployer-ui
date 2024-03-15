@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/router"
 import FileUpload from "./Assets/FileUpload"
 import { convertCsvToJson } from "../utils/helpers"
 import DataTable from "./Assets/DataTable"
 import { sendAirdrop } from "../utils/airdrop_txn"
 import { FEE } from "../utils/config"
-import CopyPasteData from "./Assets/CopyPasteData"
+import ManualDataEntry from "./Assets/ManualDataEntry"
 
 const AirdropDeeployer = ({}) => {
   const [csv_file, setCsvFile] = useState()
@@ -19,6 +19,17 @@ const AirdropDeeployer = ({}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [txnMessage, setTxnMessage] = useState(false)
   const [showCopyPaste, setShowCopyPaste] = useState(false)
+  const [contractAddress, setContractAddress] = useState()
+  const [tokenId, setTokenId] = useState()
+  const [amount, setAmount] = useState()
+
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   useEffect(() => {
     if (csv_file && csv_file.name.endsWith(".csv")) {
@@ -45,6 +56,9 @@ const AirdropDeeployer = ({}) => {
   const onSubmitAirdrop = async () => {
     await sendAirdrop(
       jsonData,
+      contractAddress,
+      tokenId,
+      amount,
       setTransactionUrl,
       setIsLoading,
       setTxnMessage,
@@ -60,11 +74,48 @@ const AirdropDeeployer = ({}) => {
       <h1 className="text-center text-2xl md:text-5xl m-2">
         Airdrop tokens to your beloved users
       </h1>
+      {!showCopyPaste && (
+        <>
+          <div className="flex-row justify-center md:flex text-center md:mx-2">
+            <input
+              ref={inputRef}
+              className="md:text-left md:mx-2 text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+              placeholder="My Contract Address"
+              value={contractAddress}
+              required
+              onChange={(event) => {
+                setContractAddress(event.target.value)
+              }}
+            />
+          </div>
+          <div className="flex-row justify-center md:flex text-center md:mx-2">
+            <input
+              type="number"
+              className="md:text-left md:mx-2 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+              placeholder="My tokenId"
+              value={tokenId}
+              required
+              onChange={(event) => {
+                setTokenId(event.target.value)
+              }}
+            />
+            <input
+              className="md:text-left md:mx-2 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+              placeholder="Token Amount per user"
+              value={amount}
+              required
+              onChange={(event) => {
+                setAmount(event.target.value)
+              }}
+            />
+          </div>
+        </>
+      )}
 
       {isFileUploaded ? (
         <>
           <div className="flex-row justify-center md:flex text-center px-2">
-            <div className="overflow-x-auto h-96 text-center justify-center items-center">
+            <div className="overflow-x-auto h-96 text-center justify-center items-center w-full mx-2">
               {jsonData.length > 0 && <DataTable data={jsonData} />}
             </div>
           </div>
@@ -124,7 +175,7 @@ const AirdropDeeployer = ({}) => {
       ) : (
         <>
           <div className="flex-row justify-center md:flex text-center">
-            <CopyPasteData />
+            <ManualDataEntry />
           </div>
           <div className="flex-row justify-center md:flex text-center text-xl font-mono">
             OR
