@@ -115,7 +115,7 @@ const AirdropDeeployer = ({}) => {
       {isFileUploaded ? (
         <>
           <div className="flex-row justify-center md:flex text-center px-2">
-            <div className="overflow-x-auto h-96 text-center justify-center items-center w-full mx-2">
+            <div className="overflow-x-auto max-h-96 text-center justify-center items-center w-full mx-2">
               {jsonData.length > 0 && <DataTable data={jsonData} />}
             </div>
           </div>
