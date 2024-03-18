@@ -11,6 +11,7 @@ const AirdropDeeployer = ({}) => {
   const [csv_file, setCsvFile] = useState()
   const [isFileUploaded, setIsFileUploaded] = useState(false)
   const [jsonData, setJsonData] = useState([])
+  const [duplicateEntries, setDuplicateEntries] = useState([])
   const [transactionUrl, setTransactionUrl] = useState("")
   const [showError, setShowError] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -30,6 +31,26 @@ const AirdropDeeployer = ({}) => {
       inputRef.current.focus()
     }
   }, [])
+
+  const identifyDuplicates = () => {
+    const duplicates = jsonData.filter(
+      (item, index) => jsonData.indexOf(item) !== index
+    )
+    setDuplicateEntries(duplicates)
+  }
+
+  const removeDuplicates = () => {
+    const uniqueData = jsonData.filter(
+      (item, index) => jsonData.indexOf(item) === index
+    )
+    setJsonData(uniqueData) // Update the jsonData state with the unique entries
+  }
+
+  useEffect(() => {
+    if (jsonData.length > 0) {
+      identifyDuplicates()
+    }
+  }, [jsonData])
 
   useEffect(() => {
     if (csv_file && csv_file.name.endsWith(".csv")) {
@@ -116,10 +137,23 @@ const AirdropDeeployer = ({}) => {
         <>
           <div className="flex-row justify-center md:flex text-center px-2">
             <div className="overflow-x-auto max-h-96 text-center justify-center items-center w-full mx-2">
-              {jsonData.length > 0 && <DataTable data={jsonData} />}
+              {jsonData.length > 0 && (
+                <DataTable
+                  data={jsonData}
+                  duplicateEntries={duplicateEntries}
+                />
+              )}
             </div>
           </div>
           <div className="flex-row md:flex my-2 mx-4 ">
+            {duplicateEntries.length > 0 && (
+              <h3
+                className="text-md md:text-xl font-monocode mr-auto underline hover:italic hover:decoration-dotted cursor-pointer"
+                onClick={removeDuplicates}
+              >
+                Remove Duplicates
+              </h3>
+            )}
             <h3 className="text-md md:text-xl font-monocode ml-auto">
               Transaction Fees: {`${FEE}`} TEZ
             </h3>

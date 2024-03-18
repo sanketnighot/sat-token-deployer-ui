@@ -8,6 +8,7 @@ const ManualDataEntry = () => {
   const [tokenId, setTokenId] = useState()
   const [amount, setAmount] = useState()
   const [recepientAddress, setRecepientAddress] = useState()
+  const [duplicateEntries, setDuplicateEntries] = useState([])
   const [transactionUrl, setTransactionUrl] = useState("")
   const [showError, setShowError] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -23,6 +24,30 @@ const ManualDataEntry = () => {
       inputRef.current.focus()
     }
   }, [])
+
+  const identifyDuplicates = () => {
+    const addresses = recepientAddress
+      .split(",")
+      .map((address) => address.trim())
+    const duplicates = addresses.filter(
+      (item, index) => addresses.indexOf(item) !== index
+    )
+    setDuplicateEntries(duplicates)
+  }
+
+  const removeDuplicates = () => {
+    const addresses = recepientAddress
+      .split(",")
+      .map((address) => address.trim())
+    const uniqueAddresses = [...new Set(addresses)]
+    setRecepientAddress(uniqueAddresses.join(", "))
+  }
+
+  useEffect(() => {
+    if (recepientAddress) {
+      identifyDuplicates()
+    }
+  }, [recepientAddress])
 
   return (
     <form
@@ -90,6 +115,14 @@ const ManualDataEntry = () => {
         />
       </div>
       <div className="flex-row md:flex mx-4 mb-2">
+        {duplicateEntries.length > 0 && (
+          <h3
+            className="text-md md:text-xl font-monocode mr-auto underline hover:italic hover:decoration-dotted cursor-pointer"
+            onClick={removeDuplicates}
+          >
+            Remove Duplicates
+          </h3>
+        )}
         <h3 className="text-xl font-monocode ml-auto">
           Transaction Fees: {`${FEE}`} TEZ
         </h3>

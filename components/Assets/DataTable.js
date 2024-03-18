@@ -1,6 +1,6 @@
 import React from "react"
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, duplicateEntries }) => {
   return (
     <div className="overflow-y-auto max-h-[400px]">
       <table className="min-w-full divide-y-2 divide-x-reverse divide-green-900 mb-5 font-mono">
@@ -18,7 +18,7 @@ const DataTable = ({ data }) => {
           {data.map((address, index) => (
             <tr
               key={index}
-              className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-500"
+              className={`px-6 py-4 whitespace-nowrap text-center text-sm text-green-500 ${duplicateEntries.includes(address) ? "bg-[#9dff8a68]" : ""}`}
             >
               <td>{index + 1}</td>
               <td>{address}</td>
