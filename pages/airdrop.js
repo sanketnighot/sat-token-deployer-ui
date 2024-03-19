@@ -21,11 +21,11 @@ const airdrop = () => {
         <div className="container w-5/6 md:w-3/6">
           <div className="mb-4">
             <h1 className="text-center text-3xl md:text-5xl mb-2">
-              Social Appreciation Tokens
+              Airdrop tokens to your beloved users
             </h1>
-            <h2 className="text-center text-xl md:text-3xl mb-2">
+            {/* <h2 className="text-center text-xl md:text-3xl mb-2">
               {"<"} For the great Artists of Tezos {">"}
-            </h2>
+            </h2> */}
           </div>
           <div className="border-2 border-[#39FF14] ring-2 ring-[#39FF14] shadow-lg m-5">
             <AirdropDeeployer />

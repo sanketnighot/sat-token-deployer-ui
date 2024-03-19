@@ -61,10 +61,10 @@ const CollectionData = () => {
             setShowToken(true)
           }}
         >
-          <h3 className="text-center text-2xl md:text-4xl mb-2 text-[#26fb26]">
+          {/* <h3 className="text-center text-2xl md:text-4xl mb-2 text-[#26fb26]">
             Create your own SAT
-          </h3>
-          <div className="flex-row justify-center md:flex text-center">
+          </h3> */}
+          <div className="flex-row justify-center md:flex text-center mt-4">
             <p className="md:text-left md:ml-4 text-sm md:text-xl md:mb-6 font-monocode md:w-2/6 m-1">
               Enter collection name
             </p>
