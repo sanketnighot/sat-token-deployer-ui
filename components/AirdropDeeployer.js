@@ -55,12 +55,10 @@ const AirdropDeeployer = ({}) => {
     try {
       setIsFetchingToken(true)
       setIsFetchingTokenError(false)
-      console.log("Setting Decimal Value")
       const tezos = await dappClient().tezos()
       await tezos.addExtension(new Tzip12Module())
       const contract = await tezos.contract.at(contractAddress, tzip12)
       const metadata = await contract.tzip12().getTokenMetadata(tokenId)
-      console.log(metadata.decimals)
       setDecimal(metadata.decimals)
       setIsFetchingToken(false)
     } catch (err) {
@@ -86,7 +84,8 @@ const AirdropDeeployer = ({}) => {
   useEffect(() => {
     if (csv_file && csv_file.name.endsWith(".csv")) {
       convertCsvToJson(csv_file)
-        .then((data) => {
+        .then(async (data) => {
+          data = await data.map((address) => address.trim())
           setJsonData(data)
         })
         .catch((err) => {

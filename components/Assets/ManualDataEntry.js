@@ -38,7 +38,6 @@ const ManualDataEntry = () => {
       await tezos.addExtension(new Tzip12Module())
       const contract = await tezos.contract.at(contractAddress, tzip12)
       const metadata = await contract.tzip12().getTokenMetadata(tokenId)
-      console.log(metadata.decimals)
       setDecimal(metadata.decimals)
       setIsFetchingToken(false)
     } catch (err) {
