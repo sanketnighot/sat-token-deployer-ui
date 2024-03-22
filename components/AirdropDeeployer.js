@@ -6,6 +6,8 @@ import DataTable from "./Assets/DataTable"
 import { sendAirdrop } from "../utils/airdrop_txn"
 import { FEE } from "../utils/config"
 import ManualDataEntry from "./Assets/ManualDataEntry"
+import { Tzip12Module, tzip12 } from "@taquito/tzip12"
+import { dappClient } from "../utils/walletconnect"
 
 const AirdropDeeployer = ({}) => {
   const [csv_file, setCsvFile] = useState()
@@ -23,6 +25,9 @@ const AirdropDeeployer = ({}) => {
   const [contractAddress, setContractAddress] = useState()
   const [tokenId, setTokenId] = useState()
   const [amount, setAmount] = useState()
+  const [decimal, setDecimal] = useState()
+  const [isFetchingToken, setIsFetchingToken] = useState(false)
+  const [isFetchingTokenError, setIsFetchingTokenError] = useState(false)
 
   const inputRef = useRef(null)
 
@@ -45,6 +50,32 @@ const AirdropDeeployer = ({}) => {
     )
     setJsonData(uniqueData) // Update the jsonData state with the unique entries
   }
+
+  const setDecimalValue = async () => {
+    try {
+      setIsFetchingToken(true)
+      setIsFetchingTokenError(false)
+      console.log("Setting Decimal Value")
+      const tezos = await dappClient().tezos()
+      await tezos.addExtension(new Tzip12Module())
+      const contract = await tezos.contract.at(contractAddress, tzip12)
+      const metadata = await contract.tzip12().getTokenMetadata(tokenId)
+      console.log(metadata.decimals)
+      setDecimal(metadata.decimals)
+      setIsFetchingToken(false)
+    } catch (err) {
+      setIsFetchingToken(false)
+      console.log(err)
+      setDecimal(0)
+      setIsFetchingTokenError(true)
+    }
+  }
+
+  useEffect(() => {
+    if (contractAddress && tokenId) {
+      setDecimalValue()
+    }
+  }, [contractAddress, tokenId])
 
   useEffect(() => {
     if (jsonData.length > 0) {
@@ -80,6 +111,7 @@ const AirdropDeeployer = ({}) => {
       contractAddress,
       tokenId,
       amount,
+      decimal,
       setTransactionUrl,
       setIsLoading,
       setTxnMessage,
@@ -92,9 +124,6 @@ const AirdropDeeployer = ({}) => {
 
   return (
     <div>
-      {/* <h1 className="text-center text-2xl md:text-5xl m-2">
-        Airdrop tokens to your beloved users
-      </h1> */}
       {!showCopyPaste && (
         <>
           <div className="flex-row justify-center md:flex text-center md:mx-2 mt-4">
@@ -130,6 +159,27 @@ const AirdropDeeployer = ({}) => {
               }}
             />
           </div>
+          {isFetchingToken && (
+            <div className="flex-row md:flex text-left md:ml-4 font-monocode">
+              Fetching Token Details, Please wait ...
+            </div>
+          )}
+          {isFetchingTokenError && (
+            <>
+              <div className="flex-row md:flex text-left md:mx-2 font-monocode">
+                Unable to fetch Token Details. Add it manually
+              </div>
+              <input
+                className="md:text-left md:mx-2 text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+                placeholder="Token Decimal"
+                value={decimal}
+                required
+                onChange={(event) => {
+                  setDecimal(Number(event.target.value))
+                }}
+              />
+            </>
+          )}
         </>
       )}
 
@@ -175,7 +225,7 @@ const AirdropDeeployer = ({}) => {
         </>
       ) : !showCopyPaste ? (
         <>
-          <div className="flex-row justify-center md:flex text-center mt-4">
+          <div className="flex-row justify-center md:flex text-center">
             <FileUpload
               csv_file={csv_file}
               setCsvFile={setCsvFile}

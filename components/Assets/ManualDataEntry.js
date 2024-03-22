@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react"
 import { sendAirdropCopyPaste } from "../../utils/airdrop_txn"
 import { useRouter } from "next/router"
 import { FEE } from "../../utils/config"
+import { Tzip12Module, tzip12 } from "@taquito/tzip12"
+import { dappClient } from "../../utils/walletconnect"
 
 const ManualDataEntry = () => {
   const [contractAddress, setContractAddress] = useState()
@@ -16,6 +18,9 @@ const ManualDataEntry = () => {
   const [successMessage, setSuccessMessage] = useState("Sucess Message")
   const [isLoading, setIsLoading] = useState(false)
   const [txnMessage, setTxnMessage] = useState(false)
+  const [decimal, setDecimal] = useState()
+  const [isFetchingToken, setIsFetchingToken] = useState(false)
+  const [isFetchingTokenError, setIsFetchingTokenError] = useState(false)
 
   const inputRef = useRef(null)
 
@@ -24,6 +29,31 @@ const ManualDataEntry = () => {
       inputRef.current.focus()
     }
   }, [])
+
+  const setDecimalValue = async () => {
+    try {
+      setIsFetchingToken(true)
+      setIsFetchingTokenError(false)
+      const tezos = await dappClient().tezos()
+      await tezos.addExtension(new Tzip12Module())
+      const contract = await tezos.contract.at(contractAddress, tzip12)
+      const metadata = await contract.tzip12().getTokenMetadata(tokenId)
+      console.log(metadata.decimals)
+      setDecimal(metadata.decimals)
+      setIsFetchingToken(false)
+    } catch (err) {
+      console.log(err)
+      setDecimal(0)
+      setIsFetchingTokenError(true)
+      setIsFetchingToken(false)
+    }
+  }
+
+  useEffect(() => {
+    if (contractAddress && tokenId) {
+      setDecimalValue()
+    }
+  }, [contractAddress, tokenId])
 
   const identifyDuplicates = () => {
     const addresses = recepientAddress
@@ -51,13 +81,14 @@ const ManualDataEntry = () => {
 
   return (
     <form
-      className="w-11/12 mx-5 my-2"
+      className="w-11/12 mx-1 my-2"
       onSubmit={async (e) => {
         e.preventDefault()
         await sendAirdropCopyPaste(
           contractAddress,
           tokenId,
           amount,
+          decimal,
           recepientAddress,
           setTransactionUrl,
           setIsLoading,
@@ -72,7 +103,7 @@ const ManualDataEntry = () => {
       <div className="flex-row justify-center md:flex text-center">
         <input
           ref={inputRef}
-          className="md:text-left md:mx-2 text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+          className="md:text-left md:mx-1 text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
           placeholder="My Contract Address"
           value={contractAddress}
           required
@@ -84,8 +115,8 @@ const ManualDataEntry = () => {
       <div className="flex-row justify-center md:flex text-center">
         <input
           type="number"
-          className="md:text-left md:mx-2 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-          placeholder="My tokenId"
+          className="md:text-left md:mx-1 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+          placeholder="Token Id"
           value={tokenId}
           required
           onChange={(event) => {
@@ -93,8 +124,8 @@ const ManualDataEntry = () => {
           }}
         />
         <input
-          className="md:text-left md:mx-2 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-          placeholder="Token Amount (Amount x Decimal)"
+          className="md:text-left md:mx-1 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+          placeholder="Token Amount per user"
           value={amount}
           required
           onChange={(event) => {
@@ -102,11 +133,32 @@ const ManualDataEntry = () => {
           }}
         />
       </div>
-      <div className="flex-row justify-center md:flex text-center"></div>
+      {isFetchingToken && (
+        <div className="flex-row md:flex text-left md:ml-4 font-monocode md:mb-2">
+          Fetching Token Details, Please wait ...
+        </div>
+      )}
+      {isFetchingTokenError && (
+        <>
+          <div className="flex-row md:flex text-left font-monocode">
+            Unable to fetch Token Details. Add it manually
+          </div>
+          <input
+            className="md:text-left md:mx-2 text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
+            placeholder="Token Decimal"
+            value={decimal}
+            type="number"
+            required
+            onChange={(event) => {
+              setDecimal(event.target.value)
+            }}
+          />
+        </>
+      )}
       <div className="flex-row justify-center md:flex text-center">
         <textarea
           required
-          className="text-left md:mx-2 w-5/6 text-sm md:text-lg font-monocode mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full px-2"
+          className="text-left md:mx-1 w-5/6 text-sm md:text-lg font-monocode mb-4 h-40 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 md:w-full px-2"
           placeholder="Your recepient address seperated with commas"
           value={recepientAddress}
           onChange={(event) => {

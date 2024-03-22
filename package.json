@@ -14,6 +14,7 @@
     "@pinata/sdk": "^2.1.0",
     "@taquito/beacon-wallet": "16.2.0",
     "@taquito/taquito": "16.2.0",
+    "@taquito/tzip12": "^19.1.0",
     "axios": "^1.6.5",
     "next": "14.0.4",
     "papaparse": "^5.4.1",

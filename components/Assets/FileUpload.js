@@ -30,7 +30,7 @@ const FileUpload = ({ setCsvFile, setIsFileUploaded }) => {
     <div className="flex items-center justify-center w-5/6 m-5">
       <label
         htmlFor="dropzone-file"
-        className={`flex flex-col items-center justify-center w-4/6 h-full border-2 border-dashed rounded-lg cursor-pointer hover:bg-bray-800 bg-green-700 hover:border-green-500 hover:bg-green-600 border-green-300 ring-2 ring-green-700 ${dragOver ? "bg-green-400" : ""}`}
+        className={`flex flex-col items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer hover:bg-bray-800 bg-green-700 hover:border-green-500 hover:bg-green-600 border-green-300 ring-2 ring-green-700 ${dragOver ? "bg-green-400" : ""}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}

@@ -9,6 +9,7 @@ export const sendAirdrop = async (
   contractAddress,
   tokenId,
   amount,
+  decimal,
   setTransactionUrl,
   setIsLoading,
   setTxnMessage,
@@ -31,7 +32,7 @@ export const sendAirdrop = async (
       transferData.push({
         to_: data,
         token_id: Number(tokenId),
-        amount: Number(amount),
+        amount: (Number(amount) * 10 ** decimal).toFixed(),
       })
     })
     const tokenContract = await tezos.wallet.at(contractAddress)
@@ -81,6 +82,7 @@ export const sendAirdropCopyPaste = async (
   contractAddress,
   tokenId,
   amount,
+  decimal,
   recepientAddress,
   setTransactionUrl,
   setIsLoading,
@@ -96,6 +98,7 @@ export const sendAirdropCopyPaste = async (
     contractAddress,
     tokenId,
     amount,
+    decimal,
     setTransactionUrl,
     setIsLoading,
     setTxnMessage,
