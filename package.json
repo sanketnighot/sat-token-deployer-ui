@@ -14,10 +14,11 @@
     "@pinata/sdk": "^2.1.0",
     "@taquito/beacon-wallet": "16.2.0",
     "@taquito/taquito": "16.2.0",
-    "@taquito/tzip12": "^19.1.0",
+    "@taquito/tzip12": "^16.2.0",
     "axios": "^1.6.5",
     "next": "14.0.4",
     "papaparse": "^5.4.1",
+    "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18"
   },
@@ -26,7 +27,6 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "postcss": "^8.4.33",
-    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1"
   },
   "husky": {
