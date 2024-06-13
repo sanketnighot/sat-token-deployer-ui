@@ -18,6 +18,8 @@ const Header = () => {
       router.push("/#faq")
     } else if (link === "airdrop") {
       router.push("/airdrop")
+    } else if (link === "farms") {
+      router.push("/farms")
     }
   }
 
@@ -58,7 +60,13 @@ const Header = () => {
             href="/airdrop"
             className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900"
           >
-            <span className="flex text-center">Airdrop_Tokens</span>
+            <span className="flex text-center">Airdrop</span>
+          </Link>
+          <Link
+            href="/farms"
+            className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900"
+          >
+            <span className="flex text-center">Farms</span>
           </Link>
           <Link
             href="/#faq"
@@ -141,7 +149,15 @@ const Header = () => {
             handleNavigate("airdrop")
           }}
         >
-          <span className="flex text-center">Airdrop_Tokens</span>
+          <span className="flex text-center">Airdrop</span>
+        </button>
+        <button
+          className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
+          onClick={() => {
+            handleNavigate("farms")
+          }}
+        >
+          <span className="flex text-center">Farms</span>
         </button>
         <button
           className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
