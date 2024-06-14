@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-export const AccordionItem = ({ title, children }) => {
+export const ListInfoItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -16,6 +16,6 @@ export const AccordionItem = ({ title, children }) => {
   )
 }
 
-export default function Accordion({ children }) {
+export default function ListInfo({ children }) {
   return <div className="space-y-4">{children}</div>
 }
