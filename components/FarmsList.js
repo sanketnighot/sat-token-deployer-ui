@@ -14,7 +14,7 @@ const farmData = [
   {
     pool_token: "KT1FJDA...ADNDA",
     reward_token: "KT1FJDA...ADNDA",
-    tokens_staked: 9244,
+    tokens_staked: 0,
     reward_earned: 0,
     apy: 120,
     farm_id: 1,
@@ -32,7 +32,7 @@ const farmData = [
   {
     pool_token: "KT1FSJS...DNWRG",
     reward_token: "KT1GWOD...SJRNW",
-    tokens_staked: 534256.23,
+    tokens_staked: 0,
     reward_earned: 0,
     apy: 167,
     farm_id: 3,
@@ -58,6 +58,7 @@ const FarmsList = () => {
               return (
                 <ListInfoItem
                   title={`${farm_id}. ${pool_token} / ${reward_token} - [${apy}% APY]`}
+                  tokens_staked={tokens_staked}
                 >
                   <table className="min-w-full divide-y-2 divide-x-reverse divide-green-900 mb-5 font-mono">
                     <thead className="bg-[#136033] sticky top-0 ">
