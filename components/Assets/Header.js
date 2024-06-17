@@ -95,7 +95,7 @@ const Header = () => {
           >
             <span className="flex text-center">FAQ</span>
           </Link>
-          <div className="group">
+          {/* <div className="group">
             <button
               className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900"
               onMouseEnter={() => setDropdownOpen(true)}
@@ -120,7 +120,7 @@ const Header = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
           <button
             className="w-full py-2 px-4 focus:outline-none mx-auto text-center text-sm md:text-lg font-monocode border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
             onClick={!account ? onConnectWallet : onDisconnectWallet}
@@ -194,9 +194,9 @@ const Header = () => {
         >
           <span className="flex text-center">FAQ</span>
         </button>
-        <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900">
+        {/* <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900">
           <span className="flex text-center">Draw2Mint_[Soon]</span>
-        </button>
+        </button> */}
         <button
           className="w-full py-2 px-4 focus:outline-none mx-auto text-center text-sm md:text-lg font-monocode border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
           onClick={!account ? onConnectWallet : onDisconnectWallet}
