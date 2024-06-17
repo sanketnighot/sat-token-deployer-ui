@@ -116,7 +116,6 @@ export const createFarm = async (
       .send()
 
     await batch.confirmation()
-    console.log(batch.opHash)
     setIsLoading(false)
     setSuccessMessage("Farm Created successfully!")
     setTransactionUrl(`${EXPLORER}/${batch.opHash}`)
@@ -164,6 +163,7 @@ export const harvestFarm = async (
 export const depositTokens = async (
   farmId,
   depositAmount,
+  poolTokenDecimals,
   poolTokenAddress,
   poolTokenId,
   setTransactionUrl,
@@ -199,7 +199,7 @@ export const depositTokens = async (
       .withContractCall(
         farming_contract.methodsObject.deposit({
           farm_id: farmId,
-          token_amount: depositAmount,
+          token_amount: (depositAmount * 10 ** poolTokenDecimals).toFixed(0),
         })
       )
       .withContractCall(
@@ -231,6 +231,7 @@ export const depositTokens = async (
 export const withdrawTokens = async (
   farmId,
   withdrawAmount,
+  poolTokenDecimals,
   setTransactionUrl,
   setIsLoading,
   setTxnMessage,
@@ -249,7 +250,7 @@ export const withdrawTokens = async (
     const contract_call = await farming_contract.methodsObject
       .withdraw({
         farm_id: farmId,
-        token_amount: withdrawAmount,
+        token_amount: (withdrawAmount * 10 ** poolTokenDecimals).toFixed(0),
       })
       .send()
     await contract_call.confirmation()
@@ -293,7 +294,16 @@ export const getUserDetailsForFarm = async (ledger_bigmap_id, farm_id) => {
   return user_farm_amount
 }
 
-export const calculatePendingRewards = async () => {}
+export const getContraceDetails = async (contract_address) => {
+  try {
+    const contract_storage = await axios.get(
+      `${API}/v1/tokens?contract=${contract_address}&select=contract,metadata`
+    )
+    return contract_storage.data
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const getFarms = async (setFarms) => {
   try {
@@ -308,17 +318,32 @@ export const getFarms = async (setFarms) => {
       const farm = farms.data[i]
       const farm_data = farm.value
       console.log(farm_data)
+      const pool_token_details = await getContraceDetails(
+        farm_data.pool_token.address
+      )
+      const reward_token_details = await getContraceDetails(
+        farm_data.reward_token.address
+      )
+      console.log(pool_token_details)
+      console.log(reward_token_details)
       const farm_id = parseInt(farm.key)
       const pool_token = farm_data.pool_token.address
+      const pool_token_symbol = pool_token_details[0].metadata.symbol
+      const reward_token_symbol = reward_token_details[0].metadata.symbol
+      const pool_token_decimals = pool_token_details[0].metadata.decimals
+      const reward_token_decimals = reward_token_details[0].metadata.decimals
       const reward_token = farm_data.reward_token.address
-      const reward_earned = farm_data.reward_paid
+      const reward_earned = (
+        farm_data.reward_paid /
+        10 ** parseInt(reward_token_decimals)
+      ).toFixed(6)
       const apr =
         new Date(farm_data.end_time).getTime() / 1000 >=
         new Date().getTime() / 1000
           ? (
               (parseInt(farm_data.reward_per_second) * 31536000) /
               (parseInt(farm_data.pool_balance) * 10 ** DECIMAL)
-            ).toPrecision(5)
+            ).toFixed(2)
           : 0
       const farm_ends =
         new Date(farm_data.end_time).getTime() / 1000 >=
@@ -327,10 +352,17 @@ export const getFarms = async (setFarms) => {
           : "Farm Ended"
       const user_data = await getUserDetailsForFarm(ledger_bigmap_id, farm_id)
       let tokens_staked = 0
-      tokens_staked = parseInt(user_data)
+      tokens_staked = (
+        parseInt(user_data) /
+        10 ** parseInt(pool_token_decimals)
+      ).toFixed(6)
       all_farms.push({
         pool_token,
+        pool_token_symbol,
+        pool_token_decimals,
         reward_token,
+        reward_token_symbol,
+        reward_token_decimals,
         tokens_staked,
         reward_earned,
         apr,
@@ -353,25 +385,43 @@ export const getFarmDetails = async (farm_id) => {
     const farms = await axios.get(
       `${API}/v1/bigmaps/${farms_bigmap_id}/keys/${farm_id}`
     )
+    console.log(farms.data.value.pool_token.address)
+    const pool_token_details = await getContraceDetails(
+      farms.data.value.pool_token.address
+    )
+    const reward_token_details = await getContraceDetails(
+      farms.data.value.reward_token.address
+    )
     const farm_data = {
       pool_token: farms.data.value.pool_token.address,
+      pool_token_symbol: pool_token_details[0].metadata.symbol,
       pool_token_id: farms.data.value.pool_token.token_id,
+      pool_token_decimals: pool_token_details[0].metadata.decimals,
       reward_token: farms.data.value.reward_token.address,
-      reward_earned: farms.data.value.reward_paid,
+      reward_token_symbol: reward_token_details[0].metadata.symbol,
+      reward_token_decimals: reward_token_details[0].metadata.decimals,
+      reward_token_id: farms.data.value.reward_token.token_id,
+      reward_earned: (
+        parseInt(farms.data.value.reward_paid) /
+        10 ** parseInt(reward_token_details[0].metadata.decimals)
+      ).toFixed(6),
       apr:
         new Date(farms.data.value.end_time).getTime() / 1000 >=
         new Date().getTime() / 1000
           ? (
               (parseInt(farms.data.value.reward_per_second) * 31536000) /
               (parseInt(farms.data.value.pool_balance) * 10 ** DECIMAL)
-            ).toPrecision(5)
+            ).toFixed(2)
           : 0,
       farm_ends:
         new Date(farms.data.value.end_time).getTime() / 1000 >=
         new Date().getTime() / 1000
           ? new Date(farms.data.value.end_time).toLocaleString()
           : "Farm Ended",
-      tokens_staked: await getUserDetailsForFarm(ledger_bigmap_id, farm_id),
+      tokens_staked: (
+        parseInt(await getUserDetailsForFarm(ledger_bigmap_id, farm_id)) /
+        10 ** parseInt(pool_token_details[0].metadata.decimals)
+      ).toFixed(6),
     }
     return farm_data
   } catch (error) {

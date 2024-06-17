@@ -40,6 +40,7 @@ const FarmDetails = () => {
     await depositTokens(
       farm_id,
       depositAmount,
+      farmDetails.pool_token_decimals,
       farmDetails.pool_token,
       farmDetails.pool_token_id,
       setTransactionUrl,
@@ -56,6 +57,7 @@ const FarmDetails = () => {
     await withdrawTokens(
       farm_id,
       withdrawAmount,
+      farmDetails.pool_token_decimals,
       setTransactionUrl,
       setIsLoading,
       setTxnMessage,
@@ -107,10 +109,8 @@ const FarmDetails = () => {
                   Farm Id : {farm_id}
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-green-600 ">
-                  {farmDetails?.pool_token?.substring(0, 5)}...
-                  {farmDetails?.pool_token?.slice(-5)} &nbsp; {">"} &nbsp;
-                  {farmDetails?.reward_token?.substring(0, 5)}...
-                  {farmDetails?.reward_token?.slice(-5)} &nbsp;
+                  ${farmDetails?.pool_token_symbol} &nbsp; {">"} &nbsp; $
+                  {farmDetails?.reward_token_symbol} &nbsp;
                   <span className="text-bold text-green-400 text-lg">
                     [{farmDetails?.apr}% APR]
                   </span>
@@ -123,7 +123,8 @@ const FarmDetails = () => {
                       Total Staked
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-green-500 sm:col-span-2 sm:mt-0">
-                      {farmDetails?.tokens_staked}
+                      {farmDetails?.tokens_staked} $
+                      {farmDetails?.pool_token_symbol}
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -131,7 +132,8 @@ const FarmDetails = () => {
                       Rewards Earned
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-green-500 sm:col-span-2 sm:mt-0">
-                      {farmDetails?.reward_earned}
+                      {farmDetails?.reward_earned} $
+                      {farmDetails?.reward_token_symbol}
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

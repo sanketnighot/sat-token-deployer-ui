@@ -27,8 +27,8 @@ const FarmsList = () => {
           {farms.map(
             (
               {
-                pool_token,
-                reward_token,
+                pool_token_symbol,
+                reward_token_symbol,
                 tokens_staked,
                 reward_earned,
                 apr,
@@ -39,7 +39,7 @@ const FarmsList = () => {
             ) => {
               return (
                 <ListInfoItem
-                  title={`${farm_id}. ${pool_token.substring(0, 5)}...${pool_token.slice(-5)} / ${reward_token.substring(0, 5)}...${reward_token.slice(-5)} - [${apr}% APR]`}
+                  title={`${farm_id}. ${pool_token_symbol} / ${reward_token_symbol} - [${apr}% APR]`}
                   tokens_staked={tokens_staked}
                   key={index}
                 >
@@ -72,10 +72,10 @@ const FarmsList = () => {
                     <tbody className="justify-center items-center bg-transparent divide-y divide-green-700">
                       <tr className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-500">
                         <td className="border border-green-300 font-mono px-2">
-                          {`${pool_token.substring(0, 5)}...${pool_token.slice(-5)}`}
+                          ${`${pool_token_symbol}`}
                         </td>
                         <td className="border border-green-300 font-mono px-2">
-                          {`${reward_token.substring(0, 5)}...${reward_token.slice(-5)}`}
+                          ${`${reward_token_symbol}`}
                         </td>
                         <td className="border border-green-300 font-mono px-2">
                           {tokens_staked}
