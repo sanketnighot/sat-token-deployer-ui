@@ -109,8 +109,8 @@ const FarmDetails = () => {
                   Farm Id : {farm_id}
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-green-600 ">
-                  ${farmDetails?.pool_token_symbol} &nbsp; {">"} &nbsp; $
-                  {farmDetails?.reward_token_symbol} &nbsp;
+                  ${farmDetails?.pool_token_symbol} {" ▶▶▶ "} $
+                  {farmDetails?.reward_token_symbol}{" "}
                   <span className="text-bold text-green-400 text-lg">
                     [{farmDetails?.apr}% APR]
                   </span>

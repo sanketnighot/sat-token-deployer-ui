@@ -39,7 +39,7 @@ const FarmsList = () => {
             ) => {
               return (
                 <ListInfoItem
-                  title={`${farm_id}. ${pool_token_symbol} / ${reward_token_symbol} - [${apr}% APR]`}
+                  title={`${farm_id}. ${pool_token_symbol} ▸▸▸ ${reward_token_symbol} - [${apr}% APR]`}
                   tokens_staked={tokens_staked}
                   key={index}
                 >
