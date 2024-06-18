@@ -83,6 +83,7 @@ p {
 }
 
 /* If you want to use a specific color, you can define it in your CSS */
-/* .custom-datetime-input input[type='datetime-local']:focus::-webkit-calendar-picker-indicator { */
-  /* background-color: rgb(8, 217, 57); Replace #yourColor with the actual color code */
-/* } */
+.custom-datetime-input input[type='datetime-local']:focus::-webkit-calendar-picker-indicator {
+  background-color: rgb(8, 217, 57); /* Replace #yourColor with the actual color code */
+  z-index: 0;
+ }

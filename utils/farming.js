@@ -448,7 +448,7 @@ export const getTokenSearchResults = async (searchQuery) => {
 
   await axios
     .get(
-      `${API}/v1/tokens?metadata.name.as=${searchQuery}*&select=contract,metadata,tokenId&limit=10`
+      `${API}/v1/tokens?metadata.name.as=${searchQuery}*&select=contract,metadata,tokenId&limit=20`
     )
     .then((res) => {
       search_results.push(...res.data)
@@ -459,7 +459,7 @@ export const getTokenSearchResults = async (searchQuery) => {
 
   await axios
     .get(
-      `${API}/v1/tokens?contract=${searchQuery}&select=contract,metadata,tokenId&limit=10`
+      `${API}/v1/tokens?contract=${searchQuery}&select=contract,metadata,tokenId&limit=40`
     )
     .then((res) => {
       search_results.push(...res.data)

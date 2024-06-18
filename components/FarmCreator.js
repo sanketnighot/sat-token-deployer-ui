@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react"
-import { useRouter } from "next/router"
 import { createFarm, getTokenSearchResults } from "../utils/farming"
 
 const FarmCreator = () => {
@@ -119,13 +118,13 @@ const FarmCreator = () => {
                 })
               }}
             />
-            <div className="relative inline-block text-left">
-              <div className="absolute left-0 w-full overflow-auto rounded-md shadow-lg">
-                {poolTokenSearchResults.length > 0 &&
-                  poolTokenSearchResults.map((result, index) => (
+            {poolTokenSearchResults.length > 0 && (
+              <div className="relative inline-block text-left z-50">
+                <div className="absolute left-0 w-full overflow-auto rounded-md border border-green-300 shadow-lg max-h-96 overflow-y-auto">
+                  {poolTokenSearchResults.map((result, index) => (
                     <div
                       key={index}
-                      className="cursor-pointer block px-4 py-2 text-sm text-green-600 hover:bg-green-600 hover:text-green-300 font-mono bg-[#1b1b1b]"
+                      className="cursor-pointer block px-4 py-2 text-sm text-green-600 hover:bg-green-600 hover:text-green-300 font-mono bg-[#1b1b1b] border border-green-900"
                       onClick={() => {
                         setFarmDetails({
                           ...farmDetails,
@@ -135,11 +134,19 @@ const FarmCreator = () => {
                         setPoolTokenSearchResults([])
                       }}
                     >
-                      {result.metadata.symbol} ({result.tokenId})
+                      <div className="flex flex-col w-full">
+                        <div className="flex flex-row justify-between w-full">
+                          {result.metadata?.name} (${result.metadata?.symbol})
+                        </div>
+                        <div className="text-green-800">
+                          Token Id: {result?.tokenId}
+                        </div>
+                      </div>
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="flex-col justify-center  flex text-left w-full md:w-2/6 px-2 mb-4">
             <label className="font-monocode text-green-300 text-left">
@@ -174,13 +181,13 @@ const FarmCreator = () => {
                 })
               }}
             />
-            <div className="relative inline-block text-left">
-              <div className="absolute left-0 w-full overflow-auto rounded-md shadow-lg">
-                {rewardTokenSearchResults.length > 0 &&
-                  rewardTokenSearchResults.map((result, index) => (
+            {rewardTokenSearchResults.length > 0 && (
+              <div className="relative inline-block text-left z-50">
+                <div className="absolute left-0 w-full overflow-auto rounded-md border border-green-300 shadow-lg max-h-96 overflow-y-auto">
+                  {rewardTokenSearchResults.map((result, index) => (
                     <div
                       key={index}
-                      className="cursor-pointer block px-4 py-2 text-sm text-green-600 hover:bg-green-600 hover:text-green-300 font-mono bg-[#1b1b1b]"
+                      className="cursor-pointer block px-4 py-2 text-sm text-green-600 hover:bg-green-600 hover:text-green-300 font-mono bg-[#1b1b1b] border border-green-900"
                       onClick={() => {
                         setFarmDetails({
                           ...farmDetails,
@@ -190,11 +197,19 @@ const FarmCreator = () => {
                         setRewardTokenSearchResults([])
                       }}
                     >
-                      {result.metadata.symbol} ({result.tokenId})
+                      <div className="flex flex-col w-full">
+                        <div className="flex flex-row justify-between ">
+                          {result.metadata?.name} (${result.metadata?.symbol})
+                        </div>
+                        <div className="text-green-800">
+                          Token Id: {result?.tokenId}
+                        </div>
+                      </div>
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="flex-col justify-center  flex text-left w-full md:w-2/6 px-2 mb-4">
             <label className="font-monocode text-green-300 text-left">
