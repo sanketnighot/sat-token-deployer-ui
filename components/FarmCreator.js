@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/router"
-import { createFarm } from "../utils/farming"
+import { createFarm, getTokenSearchResults } from "../utils/farming"
 
 const FarmCreator = () => {
   const [transactionUrl, setTransactionUrl] = useState("")
@@ -10,6 +10,10 @@ const FarmCreator = () => {
   const [successMessage, setSuccessMessage] = useState("Sucess Message")
   const [isLoading, setIsLoading] = useState(false)
   const [txnMessage, setTxnMessage] = useState(false)
+  const [poolTokenSearchResults, setPoolTokenSearchResults] = useState([])
+  const [rewardTokenSearchResults, setRewardTokenSearchResults] = useState([])
+  const [selectedItem, setSelectedItem] = useState("")
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [farmDetails, setFarmDetails] = useState({
     poolTokenAddress: "",
     poolTokenId: "",
@@ -27,6 +31,58 @@ const FarmCreator = () => {
       inputRef.current.focus()
     }
   }, [])
+
+  useEffect(() => {
+    let timer
+    const fetchTokenDetails = async () => {
+      try {
+        if (
+          !farmDetails.poolTokenAddress ||
+          farmDetails.poolTokenAddress === ""
+        ) {
+          setPoolTokenSearchResults([])
+          return
+        }
+        const tokenSearchResults = await getTokenSearchResults(
+          farmDetails.poolTokenAddress
+        )
+        setPoolTokenSearchResults(tokenSearchResults)
+        console.log(tokenSearchResults)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(fetchTokenDetails, 200)
+    return () => clearTimeout(timer)
+  }, [farmDetails?.poolTokenAddress])
+
+  useEffect(() => {
+    let timer
+    const fetchTokenDetails = async () => {
+      try {
+        if (
+          !farmDetails.rewardTokenAddress ||
+          farmDetails.rewardTokenAddress === ""
+        ) {
+          setRewardTokenSearchResults([])
+          return
+        }
+        const tokenSearchResults = await getTokenSearchResults(
+          farmDetails.rewardTokenAddress
+        )
+        setRewardTokenSearchResults(tokenSearchResults)
+        console.log(tokenSearchResults)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(fetchTokenDetails, 200)
+    return () => clearTimeout(timer)
+  }, [farmDetails?.rewardTokenAddress])
 
   return (
     <>
@@ -46,14 +102,14 @@ const FarmCreator = () => {
         }}
       >
         <div className="flex-row justify-center md:flex md:mx-2 mt-4">
-          <div className="flex-col justify-center  flex text-left w-full px-2 mb-4">
+          <div className="flex-col justify-center  flex text-left w-full md:w-4/6 px-2 mb-4">
             <label className="font-monocode text-green-300 text-left">
               Pool Token Address
             </label>
             <input
               ref={inputRef}
               className="md:text-left text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300  md:w-full px-2"
-              placeholder="Ex. KT1..."
+              placeholder="Search token, symbol, address ..."
               value={farmDetails.poolTokenAddress}
               required
               onChange={(e) => {
@@ -63,8 +119,29 @@ const FarmCreator = () => {
                 })
               }}
             />
+            <div className="relative inline-block text-left">
+              <div className="absolute left-0 w-full overflow-auto rounded-md shadow-lg">
+                {poolTokenSearchResults.length > 0 &&
+                  poolTokenSearchResults.map((result, index) => (
+                    <div
+                      key={index}
+                      className="cursor-pointer block px-4 py-2 text-sm text-green-600 hover:bg-green-600 hover:text-green-300 font-mono bg-[#1b1b1b]"
+                      onClick={() => {
+                        setFarmDetails({
+                          ...farmDetails,
+                          poolTokenAddress: result.contract.address,
+                          poolTokenId: result.tokenId,
+                        })
+                        setPoolTokenSearchResults([])
+                      }}
+                    >
+                      {result.metadata.symbol} ({result.tokenId})
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
-          <div className="flex-col justify-center  flex text-left w-full px-2 mb-4">
+          <div className="flex-col justify-center  flex text-left w-full md:w-2/6 px-2 mb-4">
             <label className="font-monocode text-green-300 text-left">
               Pool Token Id
             </label>
@@ -81,13 +158,13 @@ const FarmCreator = () => {
           </div>
         </div>
         <div className="flex-row justify-center md:flex md:mx-2">
-          <div className="flex-col justify-center  flex text-left w-full px-2 mb-4">
+          <div className="flex-col justify-center  flex text-left w-full md:w-4/6 px-2 mb-4">
             <label className="font-monocode text-green-300 text-left">
               Reward Token Address
             </label>
             <input
               className="md:text-left text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300  md:w-full px-2"
-              placeholder="Ex. KT1..."
+              placeholder="Search token, symbol, address ..."
               value={farmDetails.rewardTokenAddress}
               required
               onChange={(e) => {
@@ -97,8 +174,29 @@ const FarmCreator = () => {
                 })
               }}
             />
+            <div className="relative inline-block text-left">
+              <div className="absolute left-0 w-full overflow-auto rounded-md shadow-lg">
+                {rewardTokenSearchResults.length > 0 &&
+                  rewardTokenSearchResults.map((result, index) => (
+                    <div
+                      key={index}
+                      className="cursor-pointer block px-4 py-2 text-sm text-green-600 hover:bg-green-600 hover:text-green-300 font-mono bg-[#1b1b1b]"
+                      onClick={() => {
+                        setFarmDetails({
+                          ...farmDetails,
+                          rewardTokenAddress: result.contract.address,
+                          rewardTokenId: result.tokenId,
+                        })
+                        setRewardTokenSearchResults([])
+                      }}
+                    >
+                      {result.metadata.symbol} ({result.tokenId})
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
-          <div className="flex-col justify-center  flex text-left w-full px-2 mb-4">
+          <div className="flex-col justify-center  flex text-left w-full md:w-2/6 px-2 mb-4">
             <label className="font-monocode text-green-300 text-left">
               Reward Token Id
             </label>
