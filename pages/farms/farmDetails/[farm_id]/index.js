@@ -7,6 +7,7 @@ import {
   depositTokens,
   withdrawTokens,
 } from "../../../../utils/farming"
+import { dappClient } from "../../../../utils/walletconnect"
 
 const FarmDetails = () => {
   const [farmDetails, setFarmDetails] = useState({})
@@ -19,6 +20,7 @@ const FarmDetails = () => {
   const [txnMessage, setTxnMessage] = useState(false)
   const [depositAmount, setDepositAmount] = useState(0)
   const [withdrawAmount, setWithdrawAmount] = useState(0)
+  const user_account = dappClient().getAccount()
 
   const router = useRouter()
   const { farm_id } = router.query
@@ -74,7 +76,7 @@ const FarmDetails = () => {
       setFarmDetails(farm_details)
     }
     getDetails()
-  }, [farm_id])
+  }, [farm_id, user_account.account?.address])
 
   return (
     <>

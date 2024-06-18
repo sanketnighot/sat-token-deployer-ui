@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react"
 import ListInfo, { ListInfoItem } from "./Assets/ListInfo"
 import { getFarms } from "../utils/farming"
+import { dappClient } from "../utils/walletconnect"
 
 const FarmsList = () => {
   const [farms, setFarms] = useState([])
+  const user_account = dappClient().getAccount()
 
   useEffect(() => {
     const fetchFarmDetails = async () => {
@@ -15,7 +17,7 @@ const FarmsList = () => {
       }
     }
     fetchFarmDetails()
-  }, [])
+  }, [user_account.account?.address])
 
   return (
     <>

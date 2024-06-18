@@ -27,7 +27,6 @@ export const createFarm = async (
     const startTime = new Date(farmDetails.farmStartTime).getTime() / 1000
     const endTime = new Date(farmDetails.farmEndTime).getTime() / 1000
     if (endTime < startTime) {
-      console.log("End time should be greater than start time")
       throw new Error("End time should be greater than start time")
     }
     setIsLoading(true)
@@ -279,18 +278,23 @@ export const getFarmContractStorage = async () => {
 
 export const getUserDetailsForFarm = async (ledger_bigmap_id, farm_id) => {
   const user = await dappClient().getAccount()
-  const user_address = user.account.address
   let user_farm_amount = 0
-  const user_farm = await axios
-    .get(
-      `${API}/v1/bigmaps/${ledger_bigmap_id}/keys/{"address":"${user_address}","nat":"${farm_id}"}`
-    )
-    .then((res) => {
-      user_farm_amount = res.data.value.amount
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  if (user.account !== undefined) {
+    const user_address = user.account.address
+    const user_farm = await axios
+      .get(
+        `${API}/v1/bigmaps/${ledger_bigmap_id}/keys/{"address":"${user_address}","nat":"${farm_id}"}`
+      )
+      .then((res) => {
+        if (res.data.active) {
+          user_farm_amount = res.data.value.amount
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return user_farm_amount
 }
 
@@ -317,15 +321,12 @@ export const getFarms = async (setFarms) => {
     for (let i = 0; i < total_farms; i++) {
       const farm = farms.data[i]
       const farm_data = farm.value
-      console.log(farm_data)
       const pool_token_details = await getContraceDetails(
         farm_data.pool_token.address
       )
       const reward_token_details = await getContraceDetails(
         farm_data.reward_token.address
       )
-      console.log(pool_token_details)
-      console.log(reward_token_details)
       const farm_id = parseInt(farm.key)
       const pool_token = farm_data.pool_token.address
       const pool_token_symbol = pool_token_details[0].metadata.symbol
@@ -370,7 +371,10 @@ export const getFarms = async (setFarms) => {
         farm_ends,
       })
     }
-    setFarms(all_farms)
+    const sorted_farms = await all_farms.sort(
+      (a, b) => b.tokens_staked - a.tokens_staked
+    )
+    setFarms(sorted_farms)
   } catch (error) {
     console.log(error)
   }
@@ -381,11 +385,9 @@ export const getFarmDetails = async (farm_id) => {
     const farming_contract_storage = await getFarmContractStorage()
     const farms_bigmap_id = farming_contract_storage.farms
     const ledger_bigmap_id = farming_contract_storage.ledger
-    const total_farms = parseInt(farming_contract_storage.next_farm_id)
     const farms = await axios.get(
       `${API}/v1/bigmaps/${farms_bigmap_id}/keys/${farm_id}`
     )
-    console.log(farms.data.value.pool_token.address)
     const pool_token_details = await getContraceDetails(
       farms.data.value.pool_token.address
     )
