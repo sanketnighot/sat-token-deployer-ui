@@ -1,6 +1,6 @@
 // Ghostnet
 export const NETWORK = "ghostnet"
-export const RPC = "https://ghostnet.ecadinfra.com/"
+export const RPC = "	https://rpc.ghostnet.teztnets.com/"
 export const EXPLORER = "https://ghostnet.tzkt.io"
 export const API = "https://api.ghostnet.tzkt.io"
 export const DECIMAL = 6

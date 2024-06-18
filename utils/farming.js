@@ -343,7 +343,8 @@ export const getFarms = async (setFarms) => {
         new Date().getTime() / 1000
           ? (
               (parseInt(farm_data.reward_per_second) * 31536000) /
-              (parseInt(farm_data.pool_balance) * 10 ** DECIMAL)
+              (parseInt(farm_data.pool_balance) *
+                10 ** parseInt(reward_token_details[0].metadata.decimals))
             ).toFixed(2)
           : 0
       const farm_ends =
@@ -412,7 +413,8 @@ export const getFarmDetails = async (farm_id) => {
         new Date().getTime() / 1000
           ? (
               (parseInt(farms.data.value.reward_per_second) * 31536000) /
-              (parseInt(farms.data.value.pool_balance) * 10 ** DECIMAL)
+              (parseInt(farms.data.value.pool_balance) *
+                10 ** parseInt(reward_token_details[0].metadata.decimals))
             ).toFixed(2)
           : 0,
       farm_ends:
