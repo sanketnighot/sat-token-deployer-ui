@@ -1,5 +1,5 @@
 export const NETWORK = "mainnet"
-export const RPC = "https://mainnet.tezos.marigold.dev/"
+export const RPC = "https://mainnet.ecadinfra.com/"
 export const EXPLORER = "https://tzkt.io"
 export const DECIMAL = 6
 export const FEE = 5
