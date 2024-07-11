@@ -334,18 +334,23 @@ export const getFarms = async (setFarms) => {
       const pool_token_decimals = pool_token_details[0].metadata.decimals
       const reward_token_decimals = reward_token_details[0].metadata.decimals
       const reward_token = farm_data.reward_token.address
+      let pending_rewards = await getPendingRewards(farm_id)
+      pending_rewards =
+        parseInt(pending_rewards) /
+        10 ** pool_token_details[0].metadata.decimals
       const reward_earned = (
         farm_data.reward_paid /
         10 ** parseInt(reward_token_decimals)
       ).toFixed(6)
       const apr =
-        new Date(farm_data.end_time).getTime() / 1000 >=
-        new Date().getTime() / 1000
+        (new Date(farm_data.end_time).getTime() / 1000 >=
+          new Date().getTime() / 1000) &
+        (parseInt(farm_data.pool_balance) > 0)
           ? (
-              (parseInt(farm_data.reward_per_second) * 31536000) /
+              (parseInt(farm_data.reward_per_second) * 31536000 * 100) /
               (parseInt(farm_data.pool_balance) *
                 10 ** parseInt(reward_token_details[0].metadata.decimals))
-            ).toFixed(2)
+            ).toFixed(4)
           : 0
       const farm_ends =
         new Date(farm_data.end_time).getTime() / 1000 >=
@@ -362,6 +367,7 @@ export const getFarms = async (setFarms) => {
         pool_token,
         pool_token_symbol,
         pool_token_decimals,
+        pending_rewards,
         reward_token,
         reward_token_symbol,
         reward_token_decimals,
@@ -381,7 +387,7 @@ export const getFarms = async (setFarms) => {
   }
 }
 
-export const getFarmDetails = async (farm_id) => {
+export const getFarmDetails = async (farm_id, user_address) => {
   try {
     const farming_contract_storage = await getFarmContractStorage()
     const farms_bigmap_id = farming_contract_storage.farms
@@ -395,11 +401,14 @@ export const getFarmDetails = async (farm_id) => {
     const reward_token_details = await getContraceDetails(
       farms.data.value.reward_token.address
     )
+    const pending_rewards = await getPendingRewards(farm_id)
     const farm_data = {
       pool_token: farms.data.value.pool_token.address,
       pool_token_symbol: pool_token_details[0].metadata.symbol,
       pool_token_id: farms.data.value.pool_token.token_id,
       pool_token_decimals: pool_token_details[0].metadata.decimals,
+      pending_rewards:
+        pending_rewards / 10 ** pool_token_details[0].metadata.decimals,
       reward_token: farms.data.value.reward_token.address,
       reward_token_symbol: reward_token_details[0].metadata.symbol,
       reward_token_decimals: reward_token_details[0].metadata.decimals,
@@ -409,13 +418,14 @@ export const getFarmDetails = async (farm_id) => {
         10 ** parseInt(reward_token_details[0].metadata.decimals)
       ).toFixed(6),
       apr:
-        new Date(farms.data.value.end_time).getTime() / 1000 >=
-        new Date().getTime() / 1000
+        (new Date(farms.data.value.end_time).getTime() / 1000 >=
+          new Date().getTime() / 1000) &
+        (parseInt(farms.data.value.pool_balance) > 0)
           ? (
-              (parseInt(farms.data.value.reward_per_second) * 31536000) /
+              (parseInt(farms.data.value.reward_per_second) * 31536000 * 100) /
               (parseInt(farms.data.value.pool_balance) *
                 10 ** parseInt(reward_token_details[0].metadata.decimals))
-            ).toFixed(2)
+            ).toFixed(4)
           : 0,
       farm_ends:
         new Date(farms.data.value.end_time).getTime() / 1000 >=
@@ -468,4 +478,27 @@ export const getTokenSearchResults = async (searchQuery) => {
       console.log(err)
     })
   return search_results
+}
+
+export const getPendingRewards = async (farm_id) => {
+  try {
+    await dappClient().CheckIfWalletConnected()
+    const user_account = await dappClient().getAccount()
+    if (user_account.success) {
+      const tezos = await dappClient().tezos()
+      const farming_contract = await tezos.wallet.at(FARMING_CONTRACT)
+      const pending_rewards = await farming_contract.contractViews
+        .getPendingReward({
+          address: user_account.account?.address,
+          farm_id: farm_id,
+        })
+        .executeView({ viewCaller: FARMING_CONTRACT })
+      return pending_rewards.c[0]
+    } else {
+      return 0
+    }
+  } catch (error) {
+    console.log(error)
+    return 0
+  }
 }

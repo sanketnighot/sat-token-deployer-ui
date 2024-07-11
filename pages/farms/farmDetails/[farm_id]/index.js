@@ -6,6 +6,7 @@ import {
   harvestFarm,
   depositTokens,
   withdrawTokens,
+  getPendingRewards,
 } from "../../../../utils/farming"
 import { dappClient } from "../../../../utils/walletconnect"
 
@@ -72,8 +73,16 @@ const FarmDetails = () => {
 
   useEffect(() => {
     const getDetails = async () => {
-      const farm_details = await getFarmDetails(farm_id)
-      setFarmDetails(farm_details)
+      try {
+        const acc_address = await dappClient().getAccount()
+        const farm_details = await getFarmDetails(
+          farm_id,
+          acc_address.account?.address
+        )
+        setFarmDetails(farm_details)
+      } catch (error) {
+        console.log(error)
+      }
     }
     getDetails()
   }, [farm_id, user_account.account?.address])
@@ -131,10 +140,10 @@ const FarmDetails = () => {
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-green-300">
-                      Rewards Earned
+                      Pending Rewards
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-green-500 sm:col-span-2 sm:mt-0">
-                      {farmDetails?.reward_earned} $
+                      {farmDetails?.pending_rewards} $
                       {farmDetails?.reward_token_symbol}
                     </dd>
                   </div>

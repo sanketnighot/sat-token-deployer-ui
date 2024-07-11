@@ -5,13 +5,15 @@ import { dappClient } from "../utils/walletconnect"
 
 const FarmsList = () => {
   const [farms, setFarms] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const user_account = dappClient().getAccount()
 
   useEffect(() => {
     const fetchFarmDetails = async () => {
       try {
+        setIsLoading(true)
         await getFarms(setFarms)
-        // console.log(farms)
+        setIsLoading(false)
       } catch (error) {
         console.log(error)
       }
@@ -22,8 +24,11 @@ const FarmsList = () => {
   return (
     <>
       <div className="m-4">
-        {farms.length === 0 && (
+        {farms.length === 0 && !isLoading && (
           <p className="font-mono italic text-base">No Farms Found</p>
+        )}
+        {isLoading && (
+          <p className="font-mono italic text-base">Loading Farms ...</p>
         )}
         <ListInfo>
           {farms.map(
@@ -32,7 +37,7 @@ const FarmsList = () => {
                 pool_token_symbol,
                 reward_token_symbol,
                 tokens_staked,
-                reward_earned,
+                pending_rewards,
                 apr,
                 farm_id,
                 farm_ends,
@@ -83,7 +88,7 @@ const FarmsList = () => {
                           {tokens_staked}
                         </td>
                         <td className="border border-green-300 font-mono px-2">
-                          {reward_earned}
+                          {pending_rewards}
                         </td>
                         <td className="border border-green-300 font-mono px-2">
                           {apr}% APR
