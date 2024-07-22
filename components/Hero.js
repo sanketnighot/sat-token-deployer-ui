@@ -19,7 +19,7 @@ const Hero = () => {
         </p>
         <Link href="/create">
           <img
-            className="cursor-pointer mx-auto"
+            className="cursor-pointer w-auto mx-auto"
             src="/coin.webp"
             width={175}
             height={175}

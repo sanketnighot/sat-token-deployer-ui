@@ -16,6 +16,8 @@
     "@taquito/taquito": "16.2.0",
     "@taquito/tzip12": "^16.2.0",
     "axios": "^1.6.5",
+    "form-data": "^4.0.0",
+    "formidable": "^2.1.2",
     "next": "14.0.4",
     "papaparse": "^5.4.1",
     "prettier": "^3.2.5",
