@@ -63,8 +63,6 @@ const CollectionData = () => {
   const handleIpfsSubmit = async (e) => {
     e.preventDefault()
 
-    console.log("Token Image:", tokenImage) // Add this line to debug
-
     if (!tokenImage) {
       alert("Please select a file to upload.")
       return
@@ -362,7 +360,9 @@ const Popup = ({ title, message, onClose, bgColor, textColor, url }) => {
   }
 
   return (
-    <div className="relative bg-gray-900 rounded-sm shadow-lg p-6 w-full max-w-md mx-auto border-2 border-[#39FF14] ring-2 ring-${bgColor}">
+    <div
+      className={`relative bg-gray-900 rounded-sm shadow-lg p-6 w-full max-w-md mx-auto border-2 border-[#39FF14] ring-2 ring-${bgColor}`}
+    >
       <h3 className={`text-5xl font-semibold ${textColor}`}>{title}</h3>
       <p className="mt-4 text-xl text-gray-300 font-monocode">{message}</p>
       <div className="mt-6 flex justify-end space-x-2">
@@ -426,7 +426,7 @@ const LoaderPopup = ({ isLoading, setIsLoading, txnMessage }) => {
           onClose={() => {
             setIsLoading(false)
           }}
-          bgColor="blue"
+          bgColor="green"
           textColor="text-white"
         />
       </PopupContainer>

@@ -18,6 +18,7 @@ const FarmCreator = () => {
     poolTokenId: "",
     rewardTokenAddress: "",
     rewardTokenId: "",
+    rewardTokenDecimals: "",
     farmStartTime: "",
     farmEndTime: "",
     totalRewards: "",
@@ -46,7 +47,6 @@ const FarmCreator = () => {
           farmDetails.poolTokenAddress
         )
         setPoolTokenSearchResults(tokenSearchResults)
-        console.log(tokenSearchResults)
       } catch (error) {
         console.log(error)
       }
@@ -72,7 +72,6 @@ const FarmCreator = () => {
           farmDetails.rewardTokenAddress
         )
         setRewardTokenSearchResults(tokenSearchResults)
-        console.log(tokenSearchResults)
       } catch (error) {
         console.log(error)
       }
@@ -193,6 +192,7 @@ const FarmCreator = () => {
                           ...farmDetails,
                           rewardTokenAddress: result.contract.address,
                           rewardTokenId: result.tokenId,
+                          rewardTokenDecimals: Number(result.metadata.decimals),
                         })
                         setRewardTokenSearchResults([])
                       }}

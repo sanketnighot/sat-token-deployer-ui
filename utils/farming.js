@@ -2,7 +2,7 @@ import { dappClient } from "./walletconnect"
 import axios from "axios"
 import { BigNumber } from "bignumber.js"
 import {
-  FEE,
+  FARMING_FEE,
   DECIMAL,
   FEE_RECIPIENT,
   EXPLORER,
@@ -44,7 +44,7 @@ export const createFarm = async (
     const myAddress = await dappClient().getAccount()
     const batch = await tezos.wallet
       .batch()
-      .withTransfer({ to: FEE_RECIPIENT, amount: FEE })
+      .withTransfer({ to: FEE_RECIPIENT, amount: FARMING_FEE })
       .withContractCall(
         pool_token_contract.methods.update_operators([
           {
@@ -79,7 +79,9 @@ export const createFarm = async (
               fa2: null,
             },
           },
-          reward_supply: parseInt(farmDetails.totalRewards) * 10 ** DECIMAL,
+          reward_supply:
+            parseInt(farmDetails.totalRewards) *
+            10 ** farmDetails.rewardTokenDecimals,
           reward_token: {
             address: farmDetails.rewardTokenAddress,
             token_id: parseInt(farmDetails.rewardTokenId),

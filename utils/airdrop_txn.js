@@ -1,6 +1,6 @@
 import { dappClient } from "./walletconnect"
 import { BigNumber } from "bignumber.js"
-import { FEE, DECIMAL, FEE_RECIPIENT, EXPLORER } from "./config"
+import { AIRDROP_FEE, DECIMAL, FEE_RECIPIENT, EXPLORER } from "./config"
 
 BigNumber.config({ DECIMAL_PLACES: DECIMAL })
 
@@ -26,7 +26,7 @@ export const sendAirdrop = async (
     setTxnMessage("Preparing Airdrop ...")
     const tezos = await dappClient().tezos()
     const batch = tezos.wallet.batch()
-    batch.withTransfer({ to: FEE_RECIPIENT, amount: FEE })
+    batch.withTransfer({ to: FEE_RECIPIENT, amount: AIRDROP_FEE })
     let transferData = []
     jsonData.map(async (data) => {
       transferData.push({
