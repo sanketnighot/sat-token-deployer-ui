@@ -9,7 +9,7 @@ export const AccordionItem = ({ title, children }) => {
         className="w-full py-2 px-4 focus:outline-none mx-auto text-center text-sm md:text-lg font-monocode border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {title}
+        {title} {isOpen ? "▲" : "▼"}
       </button>
       {isOpen && <div>{children}</div>}
     </div>

@@ -76,3 +76,35 @@ p {
     transform: rotate(360deg);
   }
 }
+
+/* Custom CSS */
+.custom-datetime-input
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1); /* Example: Invert the color */
+}
+
+/* If you want to use a specific color, you can define it in your CSS */
+.custom-datetime-input
+  input[type="datetime-local"]:focus::-webkit-calendar-picker-indicator {
+  background-color: rgb(
+    8,
+    217,
+    57
+  ); /* Replace #yourColor with the actual color code */
+  z-index: 0;
+}
+
+/* Hide the original file input */
+.hidden-input {
+  display: none;
+}
+
+/* Style for the custom file input */
+.custom-file-input {
+  display: inline-block;
+  background-color: #1b3635; /* Your desired background color */
+  color: #a2ff00; /* Text color */
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}

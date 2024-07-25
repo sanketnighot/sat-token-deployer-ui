@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/router"
 import { deployContract } from "../utils/origination"
 import { FEE } from "../utils/config"
+import axios from "axios"
 
 const CollectionData = () => {
   const [showToken, setShowToken] = useState(false)
@@ -22,10 +23,12 @@ const CollectionData = () => {
     tokenUrl: "",
     tokenDescription: "",
   })
+  const [tokenImage, setTokenImage] = useState()
+  const [cid, setCid] = useState("")
+  const [uploading, setUploading] = useState(false)
 
   const inputRef = useRef(null)
   const tokenNameInputRef = useRef(null)
-  const tokenSymbolInputRef = useRef(null)
 
   useEffect(() => {
     if (showToken) {
@@ -50,6 +53,42 @@ const CollectionData = () => {
       setErrorMessage,
       setShowError
     )
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0] // Access the first file from the FileList object
+    setTokenImage(file) // Update state with the selected file
+  }
+
+  const handleIpfsSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!tokenImage) {
+      alert("Please select a file to upload.")
+      return
+    }
+
+    try {
+      setUploading(true)
+      const formData = new FormData()
+      formData.append("file", tokenImage, { filename: tokenImage.name })
+      formData.append("fileName", tokenImage.name)
+      const res = await fetch("/api/files", {
+        method: "POST",
+        body: formData,
+      })
+      const ipfsHash = await res.text()
+      setCid(ipfsHash)
+      setCollectionData((collectionData) => ({
+        ...collectionData,
+        tokenUrl: `ipfs://${ipfsHash}`,
+      }))
+      setUploading(false)
+    } catch (e) {
+      console.log(e)
+      setUploading(false)
+      alert("Trouble uploading file")
+    }
   }
 
   if (!showToken) {
@@ -179,19 +218,73 @@ const CollectionData = () => {
                 }))
               }}
             />
-            <input
-              className="md:text-left md:mx-2 text-center text-sm  md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full px-2"
-              placeholder="My token Image URL is"
-              value={collectionData.tokenUrl}
-              required
-              onChange={(event) => {
-                setCollectionData((collectionData) => ({
-                  ...collectionData,
-                  tokenUrl: event.target.value,
-                }))
-              }}
-            />
+            <div className="flex flex-col md:text-left md:mx-2 mx-auto text-center text-sm md:text-lg font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full p-1 justify-center">
+              <label htmlFor="fileInput" className="custom-file-input">
+                {tokenImage ? tokenImage.name : "Select Token Image File"}
+              </label>
+              <input
+                id="fileInput"
+                type="File"
+                className="hidden-input"
+                accept="image/*"
+                onChange={(e) => {
+                  handleFileChange(e)
+                }}
+              />
+            </div>
           </div>
+          {tokenImage && (
+            <>
+              <div
+                className="flex flex-col justify-center md:flex text-center mb-4 items-center
+          md:text-left mx-auto md:mx-0 text-sm md:text-lg font-monocode border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 md:w-full"
+              >
+                <img
+                  src={URL.createObjectURL(tokenImage)}
+                  alt="Preview"
+                  className="w-[150px] h-[150px] md:mx-2 mx-auto my-2 md:my-0 p-1"
+                />
+                <div className="flex flex-row">
+                  <button
+                    className="text-sm md:text-xl font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg mx-auto md:mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900 w-auto"
+                    onClick={(e) => {
+                      handleIpfsSubmit(e)
+                    }}
+                  >
+                    {!uploading ? "Upload to IPFS" : "Uploading ..."}
+                  </button>
+                  <button
+                    className="text-sm md:text-xl font-monocode mb-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg mx-auto md:mx-2 px-4 py-1 bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900 w-auto"
+                    onClick={() => {
+                      setTokenImage()
+                      setCollectionData((collectionData) => ({
+                        ...collectionData,
+                        tokenUrl: "",
+                      }))
+                    }}
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                {collectionData.tokenUrl !== "" && (
+                  <input
+                    className="md:text-left md:mx-2 text-center text-sm  md:text-lg font-monocode m-4 border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-transparent placeholder-green-300 w-5/6 px-2"
+                    // placeholder="My token Image URL is"
+                    value={collectionData.tokenUrl}
+                    required
+                    disabled={cid ? true : false}
+                    // onChange={(event) => {
+                    //   setCollectionData((collectionData) => ({
+                    //     ...collectionData,
+                    //     tokenUrl: event.target.value,
+                    //   }))
+                    // }}
+                  />
+                )}
+              </div>
+            </>
+          )}
           <div className="flex-row justify-center md:flex text-center mb-4">
             <textarea
               required
@@ -267,7 +360,9 @@ const Popup = ({ title, message, onClose, bgColor, textColor, url }) => {
   }
 
   return (
-    <div className="relative bg-gray-900 rounded-sm shadow-lg p-6 w-full max-w-md mx-auto border-2 border-[#39FF14] ring-2 ring-${bgColor}">
+    <div
+      className={`relative bg-gray-900 rounded-sm shadow-lg p-6 w-full max-w-md mx-auto border-2 border-[#39FF14] ring-2 ring-${bgColor}`}
+    >
       <h3 className={`text-5xl font-semibold ${textColor}`}>{title}</h3>
       <p className="mt-4 text-xl text-gray-300 font-monocode">{message}</p>
       <div className="mt-6 flex justify-end space-x-2">
@@ -331,7 +426,7 @@ const LoaderPopup = ({ isLoading, setIsLoading, txnMessage }) => {
           onClose={() => {
             setIsLoading(false)
           }}
-          bgColor="blue"
+          bgColor="green"
           textColor="text-white"
         />
       </PopupContainer>

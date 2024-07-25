@@ -1,11 +1,14 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { dappClient } from "../../utils/walletconnect"
 
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [account, setAccount] = useState(false)
+
   const router = useRouter()
 
   const handleNavigate = (link) => {
@@ -18,11 +21,31 @@ const Header = () => {
       router.push("/#faq")
     } else if (link === "airdrop") {
       router.push("/airdrop")
+    } else if (link === "farms") {
+      router.push("/farms")
     }
   }
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      const accounts = await dappClient().getAccount()
+      setAccount(accounts.account)
+    })()
+  }, [])
+
+  const onConnectWallet = async () => {
+    await dappClient().connectAccount()
+    const accounts = await dappClient().getAccount()
+    setAccount(accounts.account)
+  }
+
+  const onDisconnectWallet = async () => {
+    await dappClient().disconnectWallet()
+    setAccount(false)
   }
 
   return (
@@ -58,7 +81,13 @@ const Header = () => {
             href="/airdrop"
             className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900"
           >
-            <span className="flex text-center">Airdrop_Tokens</span>
+            <span className="flex text-center">Airdrop</span>
+          </Link>
+          <Link
+            href="/farms"
+            className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900"
+          >
+            <span className="flex text-center">Farms</span>
           </Link>
           <Link
             href="/#faq"
@@ -66,7 +95,7 @@ const Header = () => {
           >
             <span className="flex text-center">FAQ</span>
           </Link>
-          <div className="group">
+          {/* <div className="group">
             <button
               className="py-4 px-2 font-semibold transition duration-300 hover:text-green-900"
               onMouseEnter={() => setDropdownOpen(true)}
@@ -91,7 +120,13 @@ const Header = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
+          <button
+            className="w-full py-2 px-4 focus:outline-none mx-auto text-center text-sm md:text-lg font-monocode border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
+            onClick={!account ? onConnectWallet : onDisconnectWallet}
+          >
+            {!account ? "Sync" : "Disconnect"}
+          </button>
         </div>
 
         {/* Mobile menu button */}
@@ -141,7 +176,15 @@ const Header = () => {
             handleNavigate("airdrop")
           }}
         >
-          <span className="flex text-center">Airdrop_Tokens</span>
+          <span className="flex text-center">Airdrop</span>
+        </button>
+        <button
+          className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
+          onClick={() => {
+            handleNavigate("farms")
+          }}
+        >
+          <span className="flex text-center">Farms</span>
         </button>
         <button
           className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900"
@@ -151,8 +194,14 @@ const Header = () => {
         >
           <span className="flex text-center">FAQ</span>
         </button>
-        <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900">
+        {/* <button className="block py-2 px-4 text-xl transition duration-300 w-full hover:text-green-900">
           <span className="flex text-center">Draw2Mint_[Soon]</span>
+        </button> */}
+        <button
+          className="w-full py-2 px-4 focus:outline-none mx-auto text-center text-sm md:text-lg font-monocode border-2 border-green-300 ring-2 ring-green-700 shadow-lg bg-[#1B3635] hover:bg-[#a2ff00a8] text-[#a2ff00] hover:text-green-900"
+          onClick={!account ? onConnectWallet : onDisconnectWallet}
+        >
+          {!account ? "Sync" : "Disconnect"}
         </button>
       </div>
     </nav>
